@@ -91,7 +91,7 @@ ikcp_update(kcp, millisec);
 
 4. 输入一个下层数据包：
 
-```
+```cpp
 // 收到一个下层数据包（比如UDP包）时需要调用：
 ikcp_input(kcp, received_udp_packet, received_udp_size);
 ```
@@ -135,7 +135,7 @@ ikcp_input(kcp, received_udp_packet, received_udp_size);
    不管是 TCP还是 KCP计算 RTO时都有最小 RTO的限制，即便计算出来RTO为40ms，由
    于默认的 RTO是100ms，协议只有在100ms后才能检测到丢包，快速模式下为30ms，可
    以手动更改该值：
-```
+```cpp
    kcp->rx_minrto = 10;
 ```
 
@@ -144,7 +144,7 @@ ikcp_input(kcp, received_udp_packet, received_udp_size);
 默认KCP协议使用 malloc/free进行内存分配释放，如果应用层接管了内存分配，可以用
 ikcp_allocator来设置新的内存分配器，注意要在一开始设置：
 
-```
+```cpp
   ikcp_allocator(my_new_malloc, my_new_free);
 ```
 
@@ -158,7 +158,7 @@ kcp以为对方重发了，这样会产生更多的ack占用额外带宽。
 比如下层协议使用最简单的冗余包：单个数据包除了自己外，还会重复存储一次上一个
 数据包，以及上上一个数据包的内容：
 
-```
+```cpp
 Fn = (Pn, Pn-1, Pn-2)
 
 P0 = (0, X, X)
