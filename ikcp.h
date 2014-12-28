@@ -335,12 +335,25 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user);
 // release kcp control object
 void ikcp_release(ikcpcb *kcp);
 
+// user/upper level recv: returns size, returns below zero for EAGAIN
 int ikcp_recv(ikcpcb *kcp, char *buffer, int len);
+
+// user/upper level send, returns below zero for error
 int ikcp_send(ikcpcb *kcp, const char *buffer, int len);
 
-// update state (call it repeatedly, every 10ms-100ms)
+// update state (call it repeatedly, every 10ms-100ms), or you can ask 
+// ikcp_check when to call it again (without low level packet input).
 // 'current' - current timestamp in millisec
 void ikcp_update(ikcpcb *kcp, IUINT32 current);
+
+// Determine when should you invoke ikcp_update:
+// if there is no incoming low level packet, you can invoke ikcp_update
+// after millisecs ikcp_check returns, instead of call update repeatly.
+// It is important to reduce unnacessary ikcp_update calling. you can 
+// just call ikcp_update in a very small interval, or you can use it to 
+// schedule ikcp_update invoking (eg. when you are implementing an epoll
+// like mechanism, or optimize ikcp_update when handling massive kcp 
+// connections)
 IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
 
 // when you received a low level packet (eg. UDP packet), call it
@@ -349,7 +362,7 @@ void ikcp_flush(ikcpcb *kcp);
 
 int ikcp_peeksize(const ikcpcb *kcp);
 
-// change MTU size, default is 14000
+// change MTU size, default is 1400
 int ikcp_setmtu(ikcpcb *kcp, int mtu);
 
 // set maximum window size: sndwnd=32, rcvwnd=32 by default

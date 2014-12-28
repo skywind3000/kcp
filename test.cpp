@@ -137,7 +137,7 @@ void test(int mode)
 			next++;
 			sumrtt += rtt;
 			count++;
-			if (rtt > maxrtt) maxrtt = rtt;
+			if (rtt > (IUINT32)maxrtt) maxrtt = rtt;
 
 			printf("[RECV] mode=%d sn=%d rtt=%d\n", mode, (int)sn, (int)rtt);
 		}
@@ -150,7 +150,7 @@ void test(int mode)
 	ikcp_release(kcp2);
 
 	const char *names[3] = { "default", "normal", "fast" };
-	printf("%s mode result (%dms):\n", names[mode], ts1);
+	printf("%s mode result (%dms):\n", names[mode], (int)ts1);
 	printf("avgrtt=%d maxrtt=%d\n", (int)(sumrtt / count), maxrtt);
 	printf("press enter to next ...\n");
 	char ch; scanf("%c", &ch);

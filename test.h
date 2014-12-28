@@ -218,6 +218,7 @@ public:
 		}
 		maxsize = pkt->size();
 		memcpy(data, pkt->ptr(), maxsize);
+		delete pkt;
 		return maxsize;
 	}
 
