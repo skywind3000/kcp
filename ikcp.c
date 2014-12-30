@@ -1072,6 +1072,16 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current)
 }
 
 
+//---------------------------------------------------------------------
+// Determine when should you invoke ikcp_update:
+// if there is no ikcp_input/_send calling, you can call ikcp_update
+// after millisecs ikcp_check returns, instead of call update repeatly.
+// It is important to reduce unnacessary ikcp_update calling. you can 
+// just call ikcp_update in a very small interval, or you can use it to 
+// schedule ikcp_update calling (eg. when you are implementing an epoll
+// like mechanism, or optimize ikcp_update when handling massive kcp 
+// connections)
+//---------------------------------------------------------------------
 IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 {
 	IUINT32 ts_flush = kcp->ts_flush;
