@@ -58,45 +58,43 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 # 基本使用
 
-* 创建 KCP对象：
+1. 创建 KCP对象：
 
-```cpp
-// 初始化 kcp对象，conv为一个表示会话编号的整数，和tcp的 conv一样，通信双
-// 方需保证 conv相同，相互的数据包才能够被认可，user是一个给回调函数的指针
-ikcpcb *kcp = ikcp_create(conv, user);
-```
+   ```cpp
+   // 初始化 kcp对象，conv为一个表示会话编号的整数，和tcp的 conv一样，通信双
+   // 方需保证 conv相同，相互的数据包才能够被认可，user是一个给回调函数的指针
+   ikcpcb *kcp = ikcp_create(conv, user);
+   ```
 
-* 设置回调函数：
+2. 设置回调函数：
 
+   ```cpp
+   // KCP的下层协议输出函数，KCP需要发送数据时会调用它
+   // buf/len 表示缓存和长度
+   // user指针为 kcp对象创建时传入的值，用于区别多个 KCP对象
+   int udp_output(const char *buf, int len, ikcpcb *kcp, void *user)
+   {
+     ....
+   }
+   // 设置回调函数
+   kcp->output = udp_output;
+   ```
 
-```cpp
-// KCP的下层协议输出函数，KCP需要发送数据时会调用它
-// buf/len 表示缓存和长度
-// user指针为 kcp对象创建时传入的值，用于区别多个 KCP对象
-int udp_output(const char *buf, int len, ikcpcb *kcp, void *user)
-{
-  ....
-}
-// 设置回调函数
-kcp->output = udp_output;
-```
+3. 循环调用 update：
 
-* 循环调用 update：
+   ```cpp
+   // 以一定频率调用 ikcp_update来更新 kcp状态，并且传入当前时钟（毫秒单位）
+   // 如 10ms调用一次，或用 ikcp_check确定下次调用 update的时间不必每次调用
+   ikcp_update(kcp, millisec);
+   ```
 
-```cpp
-// 以一定频率调用 ikcp_update来更新 kcp状态，并且传入当前时钟（毫秒单位）
-// 如 10ms调用一次，或用 ikcp_check确定下次调用 update的时间不必每次调用
-ikcp_update(kcp, millisec);
-```
+4. 输入一个下层数据包：
 
-* 输入一个下层数据包：
-
-```cpp
-// 收到一个下层数据包（比如UDP包）时需要调用：
-ikcp_input(kcp, received_udp_packet, received_udp_size);
-```
-处理了下层协议的输出/输入后 KCP协议就可以正常工作了，使用 ikcp_send来向远端发
-送数据。而另一端使用ikcp_recv(kcp, ptr, size)来接收数据。
+   ```cpp
+   // 收到一个下层数据包（比如UDP包）时需要调用：
+   ikcp_input(kcp, received_udp_packet, received_udp_size);
+   ```
+   处理了下层协议的输出/输入后 KCP协议就可以正常工作了，使用 ikcp_send 来向远端发送数据。而另一端使用 ikcp_recv(kcp, ptr, size)来接收数据。
 
 
 # 协议配置
@@ -105,24 +103,18 @@ ikcp_input(kcp, received_udp_packet, received_udp_size);
 
 1. 工作模式：
 
- int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
+  int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
 
    nodelay ：是否启用 nodelay模式，0不启用；1启用。
-
    interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms
-
    resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
-
    nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
 
    普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);
-
    极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
 2. 最大窗口：
-
- int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
-
+  int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
    该调用将会设置协议的最大发送窗口和最大接收窗口大小，默认为32.
 
 3. 最大传输单元：
@@ -135,19 +127,18 @@ ikcp_input(kcp, received_udp_packet, received_udp_size);
    不管是 TCP还是 KCP计算 RTO时都有最小 RTO的限制，即便计算出来RTO为40ms，由
    于默认的 RTO是100ms，协议只有在100ms后才能检测到丢包，快速模式下为30ms，可
    以手动更改该值：
-```cpp
-   kcp->rx_minrto = 10;
-```
+  ```cpp
+     kcp->rx_minrto = 10;
+  ```
 
 # 最佳实践
 #### 内存分配器
 
-默认KCP协议使用 malloc/free进行内存分配释放，如果应用层接管了内存分配，可以用
-ikcp_allocator来设置新的内存分配器，注意要在一开始设置：
+  默认KCP协议使用 malloc/free进行内存分配释放，如果应用层接管了内存分配，可以用ikcp_allocator来设置新的内存分配器，注意要在一开始设置：
 
-```cpp
-  ikcp_allocator(my_new_malloc, my_new_free);
-```
+  ```cpp
+    ikcp_allocator(my_new_malloc, my_new_free);
+  ```
 
 
 #### 前向纠错注意
