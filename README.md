@@ -119,6 +119,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
    极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
 2. 最大窗口：
+
   int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
    该调用将会设置协议的最大发送窗口和最大接收窗口大小，默认为32.
 
