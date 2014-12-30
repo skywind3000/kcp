@@ -175,9 +175,12 @@ ikcp_check来大大减少 ikcp_update调用的次数。 ikcp_check返回值会�
 
 标准顺序是每次调用了 ikcp_update后，使用 ikcp_check决定下次什么时间点再次调用
 ikcp_update，而如果中途发生了 ikcp_send, ikcp_input的话，在下一轮 interval 
-立马调用 ikcp_update和 ikcp_check。
-
-原来在处理2000个 kcp连接且每个连接每10ms调用一次update，改为 check机制后，cpu
-从 60%降低到15%。
+立马调用 ikcp_update和 ikcp_check。 使用该方法，原来在处理2000个 kcp连接且每
+个连接每10ms调用一次update，改为 check机制后，cpu从 60%降低到 15%。
 
 
+# 欢迎捐赠
+
+![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/doc/donate.png)
+
+欢迎使用支付宝手扫描上面的二维码，对该项目进行捐赠。
