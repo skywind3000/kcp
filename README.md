@@ -103,24 +103,21 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 协议默认模式是一个标准的 ARQ，需要通过配置打开各项加速开关：
 
 1. 工作模式：
+   ```cpp
+   int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
+   ```
 
-  int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
-
-   nodelay ：是否启用 nodelay模式，0不启用；1启用。
-   
-   interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms
-   
-   resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
-   
-   nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
-
-   普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);
-   
-   极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
+   > nodelay ：是否启用 nodelay模式，0不启用；1启用。
+   > interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms
+   > resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
+   > nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
+   > 普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);
+   > 极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
 2. 最大窗口：
-
-  int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
+   ```cpp
+   int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
+   ```
    该调用将会设置协议的最大发送窗口和最大接收窗口大小，默认为32.
 
 3. 最大传输单元：
@@ -133,9 +130,9 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
    不管是 TCP还是 KCP计算 RTO时都有最小 RTO的限制，即便计算出来RTO为40ms，由
    于默认的 RTO是100ms，协议只有在100ms后才能检测到丢包，快速模式下为30ms，可
    以手动更改该值：
-  ```cpp
-     kcp->rx_minrto = 10;
-  ```
+   ```cpp
+   kcp->rx_minrto = 10;
+   ```
 
 # 最佳实践
 #### 内存分配器
@@ -143,9 +140,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
   默认KCP协议使用 malloc/free进行内存分配释放，如果应用层接管了内存分配，可以
   用ikcp_allocator来设置新的内存分配器，注意要在一开始设置：
 
-   ```cpp
-     ikcp_allocator(my_new_malloc, my_new_free);
-   ```
+  > ikcp_allocator(my_new_malloc, my_new_free);
 
 
 #### 前向纠错注意
@@ -169,3 +164,20 @@ P3 = (3, 2, 1)
 这样几个包发送出去，接收方对于单个原始包都可能被解出3次来（后面两个包任然会重
 复该包内容），那么这里需要记录一下，一个下层数据包只会input给kcp一次，避免过
 多重复ack带来的浪费。
+
+#### 管理大规模连接
+
+如果需要同时管理大规模的 KCP连接（比如大于3000个），比如你正在实现一套类 epoll
+的机制，那么为了避免每秒钟对每个连接调用大量的调用 ikcp_update，我们可以使用
+ikcp_check来大大减少 ikcp_update调用的次数。 ikcp_check返回值会告诉你需要
+在什么时间点再次调用 ikcp_update（如果中途没有 ikcp_send, ikcp_input的话，
+否则中途调用了 ikcp_send, ikcp_input的话，需要在下一次interval时调用 update）
+
+标准顺序是每次调用了 ikcp_update后，使用 ikcp_check决定下次什么时间点再次调用
+ikcp_update，而如果中途发生了 ikcp_send, ikcp_input的话，在下一轮 interval 
+立马调用 ikcp_update和 ikcp_check。
+
+原来在处理2000个 kcp连接且每个连接每10ms调用一次update，改为 check机制后，cpu
+从 60%降低到15%。
+
+

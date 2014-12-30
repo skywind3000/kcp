@@ -1042,7 +1042,9 @@ void ikcp_flush(ikcpcb *kcp)
 
 
 //---------------------------------------------------------------------
-// input update
+// update state (call it repeatedly, every 10ms-100ms), or you can ask 
+// ikcp_check when to call it again (without ikcp_input/_send calling).
+// 'current' - current timestamp in millisec. 
 //---------------------------------------------------------------------
 void ikcp_update(ikcpcb *kcp, IUINT32 current)
 {
@@ -1074,13 +1076,12 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current)
 
 //---------------------------------------------------------------------
 // Determine when should you invoke ikcp_update:
-// if there is no ikcp_input/_send calling, you can call ikcp_update
-// after millisecs ikcp_check returns, instead of call update repeatly.
-// It is important to reduce unnacessary ikcp_update calling. you can 
-// just call ikcp_update in a very small interval, or you can use it to 
-// schedule ikcp_update calling (eg. when you are implementing an epoll
-// like mechanism, or optimize ikcp_update when handling massive kcp 
-// connections)
+// returns when you should invoke ikcp_update in millisec, if there 
+// is no ikcp_input/_send calling. you can call ikcp_update in that
+// time, instead of call update repeatly.
+// Important to reduce unnacessary ikcp_update invoking. use it to 
+// schedule ikcp_update (eg. implementing an epoll-like mechanism, 
+// or optimize ikcp_update when handling massive kcp connections)
 //---------------------------------------------------------------------
 IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 {
