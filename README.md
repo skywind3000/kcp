@@ -181,7 +181,7 @@ ikcp_update，而如果中途发生了 ikcp_send, ikcp_input的话，在下一�
 
 # 欢迎捐赠
 
-![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/doc/donate.png)
+![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/donation.png)
 
 欢迎使用支付宝手扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于改进 KCP性能以及
 后续持续优化。
