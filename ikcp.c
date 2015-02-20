@@ -865,7 +865,7 @@ void ikcp_flush(ikcpcb *kcp)
 	count = kcp->ackcount;
 	for (i = 0; i < count; i++) {
 		size = (int)(ptr - buffer);
-		if (size > (int)kcp->mtu) {
+		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
@@ -901,7 +901,7 @@ void ikcp_flush(ikcpcb *kcp)
 	if (kcp->probe & IKCP_ASK_SEND) {
 		seg.cmd = IKCP_CMD_WASK;
 		size = (int)(ptr - buffer);
-		if (size > (int)kcp->mtu) {
+		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
@@ -912,7 +912,7 @@ void ikcp_flush(ikcpcb *kcp)
 	if (kcp->probe & IKCP_ASK_TELL) {
 		seg.cmd = IKCP_CMD_WINS;
 		size = (int)(ptr - buffer);
-		if (size > (int)kcp->mtu) {
+		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
@@ -992,7 +992,7 @@ void ikcp_flush(ikcpcb *kcp)
 			size = (int)(ptr - buffer);
 			need = IKCP_OVERHEAD + segment->len;
 
-			if (size + need >= (int)kcp->mtu) {
+			if (size + need > (int)kcp->mtu) {
 				ikcp_output(kcp, buffer, size);
 				ptr = buffer;
 			}

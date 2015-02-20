@@ -12,7 +12,7 @@
 #ifndef __IKCP_H__
 #define __IKCP_H__
 
-#include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <assert.h>
 
@@ -358,8 +358,11 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
 
 // when you received a low level packet (eg. UDP packet), call it
 int ikcp_input(ikcpcb *kcp, const char *data, long size);
+
+// flush pending data
 void ikcp_flush(ikcpcb *kcp);
 
+// check the size of next message in the recv queue
 int ikcp_peeksize(const ikcpcb *kcp);
 
 // change MTU size, default is 1400
@@ -382,6 +385,10 @@ int ikcp_rcvbuf_count(const ikcpcb *kcp);
 int ikcp_sndbuf_count(const ikcpcb *kcp);
 
 void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
+
+// setup allocator
+void ikcp_allocator(void* (*new_malloc)(size_t), void (*new_free)(void*));
+
 
 #ifdef __cplusplus
 }
