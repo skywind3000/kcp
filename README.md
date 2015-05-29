@@ -118,7 +118,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [Wiki Home](https://github.com/skywind3000/kcp/wiki)
 - [KCP 最佳实践](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice)
-- [同现有TCP服务器集成](https://github.com/skywind3000/kcp/wiki/Integrate-With-Tcp-Server)
+- [同现有TCP服务器集成](https://github.com/skywind3000/kcp/wiki/Cooperate-With-Tcp-Server)
 - [传输数据加密](https://github.com/skywind3000/kcp/wiki/Network-Encryption)
 - [应用层流量控制](https://github.com/skywind3000/kcp/wiki/Flow-Control-for-Users)
 
