@@ -116,7 +116,10 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 协议的使用和配置都是很简单的，大部分情况看完上面的内容基本可以使用了。如果你需要进一步进行精细的控制，比如改变 KCP的内存分配器，或者你需要更有效的大规模调度 KCP链接（比如 3500个以上），或者想把它和 TCP结合，那么可以继续延伸阅读：
 
-[KCP 最佳实践](wiki/KCP-Best-Practice)
+- [KCP 最佳实践](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice)
+- [同现有TCP服务器集成](https://github.com/skywind3000/kcp/wiki/Integrate-With-Tcp-Server)
+- [传输数据加密](https://github.com/skywind3000/kcp/wiki/Network-Encryption)
+- [应用层流量控制](https://github.com/skywind3000/kcp/wiki/Flow-Control-for-Users)
 
 
 # 相关应用
