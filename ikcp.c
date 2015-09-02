@@ -793,7 +793,7 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 			}	else {
 				if (kcp->incr < mss) kcp->incr = mss;
 				kcp->incr += (mss * mss) / kcp->incr + (mss / 16);
-				if ((kcp->cwnd + 1) * mss >= kcp->incr) {
+				if ((kcp->cwnd + 1) * mss <= kcp->incr) {
 					kcp->cwnd++;
 				}
 			}
