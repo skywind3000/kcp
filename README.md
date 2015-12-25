@@ -137,3 +137,10 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 欢迎使用支付宝手扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于改进 KCP性能以及
 后续持续优化。
+
+
+欢迎关注
+
+blog: http://www.skywind.me
+zhihu: https://www.zhihu.com/people/skywind3000 
+
