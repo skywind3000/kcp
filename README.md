@@ -131,6 +131,8 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 # 性能比较
 
+如果不丢包那么 KCP和 TCP性能差不多，KCP不会有任何优势，但是网络会卡，造成卡的原因就是丢包和抖动，有同学在内网这样好的环境下没有用任何丢包模拟直接跑，跑出来的数据是差不多的，但是放到公网上，放到3G/4G网络情况下，差距就很明显了，公网在高峰期有平均接近10%的丢包，wifi/3g/4g下更糟糕，这正是造成各种网络卡顿的元凶。
+
 感谢 [asio-kcp](https://github.com/libinzhangyuan/asio_kcp) 的作者 [zhangyuan](https://github.com/libinzhangyuan) 对 KCP 与 enet, udt做过的一次横向评测，结论如下：
 
 - ASIO-KCP has good performace in wifi and phone network(3G, 4G).
