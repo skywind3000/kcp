@@ -133,12 +133,12 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 感谢 [asio-kcp](https://github.com/libinzhangyuan/asio_kcp) 的作者 [zhangyuan](https://github.com/libinzhangyuan) 对 KCP 与 enet, udt做过的一次横向评测，结论如下：
 
+- ASIO-KCP has good performace in wifi and phone network(3G, 4G).
+- Extra using 20% ~ 50% network flow for speed improvement.
 - The kcp is the first choice for realtime pvp game.
 - The lag is less than 1 second when network lag happen. 3 times better than enet when lag happen.
 - The enet is a good choice if your game allow 2 second lag.
 - UDT is a bad idea. It always sink into badly situation of more than serval seconds lag. And the recovery is not expected.
-- Has good performace in wifi and phone network(3G, 4G).
-- Extra using 20% ~ 50% network flow for speed improvement.
 - enet has the problem of lack of doc. And it has lots of functions that you may intrest.
 kcp's doc is chinese.
 Good thing is the function detail which is writen in code is english. And you can use asio_kcp which is a good wrap.
