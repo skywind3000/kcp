@@ -127,7 +127,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [dog-tunnel](https://github.com/vzex/dog-tunnel): GO开发的网络隧道，使用 KCP极大的改进了传输速度，并移植了一份 GO版本 KCP
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp)：KCP的 Lua扩展，用于 Lua服务器
-- [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等，可直接使用的用户库。
+- [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等
 
 # 性能比较
 
