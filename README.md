@@ -133,6 +133,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [kcp-go](https://github.com/xtaci/kcp-go): 另一份对 KCP更精简的 GO移植，同时包含简单的 UDP会话管理，可以直接使用
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
 - [kcptun](https://github.com/xtaci/kcptun): 基于kcpgo做的远程端口转发，配合ssh -D，可以比 sslocal/ssserver 更流畅的看在线视频。
+- [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段。
 
 # 协议比较
 
