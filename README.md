@@ -130,9 +130,9 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [dog-tunnel](https://github.com/vzex/dog-tunnel): GO开发的网络隧道，使用 KCP极大的改进了传输速度，并移植了一份 GO版本 KCP
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): KCP的 Lua扩展，用于 Lua服务器
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等
-- [kcp-go](https://github.com/xtaci/kcp-go): 另一份对 KCP更精简的 GO移植，同时包含简单的 UDP会话管理，可以直接使用
+- [kcp-go](https://github.com/xtaci/kcp-go): 高安全性的kcp的 GO语言实现，包含 UDP会话管理的简单实现，可以作为后续开发的基础库。 
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
-- [kcptun](https://github.com/xtaci/kcptun): 基于kcpgo做的远程端口转发，配合ssh -D，可以比 sslocal/ssserver 更流畅的看在线视频。
+- [kcptun](https://github.com/xtaci/kcptun): 基于 kcp-go做的高速远程端口转发(隧道) ，配合ssh -D，可以比 sslocal/ssserver 更流畅的看在线视频。
 - [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段。
 
 # 协议比较
