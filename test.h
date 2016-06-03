@@ -146,6 +146,7 @@ protected:
 class LatencySimulator
 {
 public:
+
 	virtual ~LatencySimulator() {
 		clear();
 	}
@@ -160,6 +161,7 @@ public:
 		this->rttmin = rttmin / 2;
 		this->rttmax = rttmax / 2;
 		this->nmax = nmax;
+		tx1 = tx2 = 0;
 	}
 
 	// 清除数据
@@ -179,9 +181,11 @@ public:
 	// peer - 端点0/1，从0发送，从1接收；从1发送从0接收
 	void send(int peer, const void *data, int size) {
 		if (peer == 0) {
+			tx1++;
 			if (r12.random() < lostrate) return;
 			if ((int)p12.size() >= nmax) return;
 		}	else {
+			tx2++;
 			if (r21.random() < lostrate) return;
 			if ((int)p21.size() >= nmax) return;
 		}
@@ -221,6 +225,10 @@ public:
 		delete pkt;
 		return maxsize;
 	}
+
+public:
+	int tx1;
+	int tx2;
 
 protected:
 	IUINT32 current;

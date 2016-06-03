@@ -71,6 +71,8 @@ void test(int mode)
 		// 第五个参数 为是否禁用常规流控，这里禁止
 		ikcp_nodelay(kcp1, 1, 10, 2, 1);
 		ikcp_nodelay(kcp2, 1, 10, 2, 1);
+		kcp1->rx_minrto = 10;
+		kcp1->fastresend = 1;
 	}
 
 
@@ -87,8 +89,8 @@ void test(int mode)
 
 		// 每隔 20ms，kcp1发送数据
 		for (; current >= slap; slap += 20) {
-			*(IUINT32*)(buffer + 0) = index++;
-			*(IUINT32*)(buffer + 4) = current;
+			((IUINT32*)buffer)[0] = index++;
+			((IUINT32*)buffer)[1] = current;
 
 			// 发送上层协议包
 			ikcp_send(kcp1, buffer, 8);
@@ -151,15 +153,15 @@ void test(int mode)
 
 	const char *names[3] = { "default", "normal", "fast" };
 	printf("%s mode result (%dms):\n", names[mode], (int)ts1);
-	printf("avgrtt=%d maxrtt=%d\n", (int)(sumrtt / count), maxrtt);
+	printf("avgrtt=%d maxrtt=%d tx=%d\n", (int)(sumrtt / count), (int)maxrtt, (int)vnet->tx1);
 	printf("press enter to next ...\n");
 	char ch; scanf("%c", &ch);
 }
 
 int main()
 {
-	test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
-	test(1);	// 普通模式，关闭流控等
+//test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
+//test(1);	// 普通模式，关闭流控等
 	test(2);	// 快速模式，所有开关都打开，且关闭流控
 	return 0;
 }

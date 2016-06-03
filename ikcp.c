@@ -541,15 +541,14 @@ static void ikcp_parse_ack(ikcpcb *kcp, IUINT32 sn)
 			kcp->nsnd_buf--;
 			break;
 		}
-		else {
-			seg->fastack++;
+		if (_itimediff(sn, seg->sn) < 0) {
+			break;
 		}
 	}
 }
 
 static void ikcp_parse_una(ikcpcb *kcp, IUINT32 una)
 {
-#if 1
 	struct IQUEUEHEAD *p, *next;
 	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
 		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
@@ -562,7 +561,25 @@ static void ikcp_parse_una(ikcpcb *kcp, IUINT32 una)
 			break;
 		}
 	}
-#endif
+}
+
+static void ikcp_parse_fastack(ikcpcb *kcp, IUINT32 sn)
+{
+	struct IQUEUEHEAD *p, *next;
+
+	if (_itimediff(sn, kcp->snd_una) < 0 || _itimediff(sn, kcp->snd_nxt) >= 0)
+		return;
+
+	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
+		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
+		next = p->next;
+		if (_itimediff(sn, seg->sn) < 0) {
+			break;
+		}
+		else if (sn != seg->sn) {
+			seg->fastack++;
+		}
+	}
 }
 
 
@@ -684,6 +701,8 @@ void ikcp_parse_data(ikcpcb *kcp, IKCPSEG *newseg)
 int ikcp_input(ikcpcb *kcp, const char *data, long size)
 {
 	IUINT32 una = kcp->snd_una;
+	IUINT32 maxack = 0;
+	int flag = 0;
 
 	if (ikcp_canlog(kcp, IKCP_LOG_INPUT)) {
 		ikcp_log(kcp, IKCP_LOG_INPUT, "[RI] %d bytes", size);
@@ -728,6 +747,14 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 			}
 			ikcp_parse_ack(kcp, sn);
 			ikcp_shrink_buf(kcp);
+			if (flag == 0) {
+				flag = 1;
+				maxack = sn;
+			}	else {
+				if (_itimediff(sn, maxack) > 0) {
+					maxack = sn;
+				}
+			}
 			if (ikcp_canlog(kcp, IKCP_LOG_IN_ACK)) {
 				ikcp_log(kcp, IKCP_LOG_IN_DATA, 
 					"input ack: sn=%lu rtt=%ld rto=%ld", sn, 
@@ -782,6 +809,10 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 
 		data += len;
 		size -= len;
+	}
+
+	if (flag != 0) {
+		ikcp_parse_fastack(kcp, maxack);
 	}
 
 	if (_itimediff(kcp->snd_una, una) > 0) {
@@ -865,7 +896,7 @@ void ikcp_flush(ikcpcb *kcp)
 	count = kcp->ackcount;
 	for (i = 0; i < count; i++) {
 		size = (int)(ptr - buffer);
-		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
+		if (size + (int)IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
@@ -901,7 +932,7 @@ void ikcp_flush(ikcpcb *kcp)
 	if (kcp->probe & IKCP_ASK_SEND) {
 		seg.cmd = IKCP_CMD_WASK;
 		size = (int)(ptr - buffer);
-		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
+		if (size + (int)IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
@@ -912,7 +943,7 @@ void ikcp_flush(ikcpcb *kcp)
 	if (kcp->probe & IKCP_ASK_TELL) {
 		seg.cmd = IKCP_CMD_WINS;
 		size = (int)(ptr - buffer);
-		if (size + IKCP_OVERHEAD > (int)kcp->mtu) {
+		if (size + (int)IKCP_OVERHEAD > (int)kcp->mtu) {
 			ikcp_output(kcp, buffer, size);
 			ptr = buffer;
 		}
