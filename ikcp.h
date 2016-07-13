@@ -9,8 +9,8 @@
 // + Lightweight, distributed as a single source file.
 //
 //=====================================================================
-#ifndef IKCP_H
-#define IKCP_H
+#ifndef __IKCP_H__
+#define __IKCP_H__
 
 #include <stddef.h>
 #include <stdlib.h>
