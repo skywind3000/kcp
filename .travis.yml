@@ -1,0 +1,7 @@
+language: cpp
+compiler:
+    - gcc
+    - clang
+script:
+    - gcc -O3 test.cpp -o test
+
