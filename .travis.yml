@@ -3,5 +3,5 @@ compiler:
     - gcc
     - clang
 script:
-    - $CC -O3 test.cpp -o test
+    - $CC -O3 test.cpp -o test -lstdc++
 
