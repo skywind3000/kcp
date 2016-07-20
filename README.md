@@ -138,6 +138,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
 - [kcptun](https://github.com/xtaci/kcptun): 基于 kcp-go做的高速远程端口转发(隧道) ，配合ssh -D，可以比 shadowsocks 更流畅的看在线视频。
 - [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段。
+- [v2ray](https://www.v2ray.com)：著名代理软件，Shadowsocks 代替者，1.17后集成了 kcp协议，使用UDP传输，无数据包特征。
 
 # 协议比较
 
@@ -169,6 +170,8 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 
 欢迎关注
+
+KCP交流群：364933586（QQ群号），KCP集成，优化，调优以及相关技术讨论
 
 blog: http://www.skywind.me
 
