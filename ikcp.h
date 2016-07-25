@@ -298,7 +298,7 @@ struct IKCPCB
 	void *user;
 	char *buffer;
 	int fastresend;
-	int nocwnd;
+	int nocwnd, stream;
 	int logmask;
 	int (*output)(const char *buf, int len, struct IKCPCB *kcp, void *user);
 	void (*writelog)(const char *log, struct IKCPCB *kcp, void *user);
