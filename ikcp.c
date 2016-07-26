@@ -463,6 +463,36 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 	assert(kcp->mss > 0);
 	if (len < 0) return -1;
 
+	// append to previous segment in streaming mode (if possible)
+	if (kcp->stream != 0) {
+		if (!iqueue_is_empty(&kcp->snd_queue)) {
+			IKCPSEG *old = iqueue_entry(kcp->snd_queue.prev, IKCPSEG, node);
+			if (old->len < kcp->mss) {
+				int capacity = kcp->mss - old->len;
+				int extend = (len < capacity)? len : capacity;
+				seg = ikcp_segment_new(kcp, old->len + extend);
+				assert(seg);
+				if (seg == NULL) {
+					return -2;
+				}
+				iqueue_add_tail(&seg->node, &kcp->snd_queue);
+				memcpy(seg->data, old->data, old->len);
+				if (buffer) {
+					memcpy(seg->data + old->len, buffer, extend);
+					buffer += extend;
+				}
+				seg->len = old->len + extend;
+				seg->frg = 0;
+				len -= extend;
+				iqueue_del_init(&old->node);
+				ikcp_segment_delete(kcp, old);
+			}
+		}
+		if (len <= 0) {
+			return 0;
+		}
+	}
+
 	if (len <= (int)kcp->mss) count = 1;
 	else count = (len + kcp->mss - 1) / kcp->mss;
 
