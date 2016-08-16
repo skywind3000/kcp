@@ -95,12 +95,12 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
    int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
    ```
 
-   > nodelay ：是否启用 nodelay模式，0不启用；1启用。
-   > interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms
-   > resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
-   > nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
-   > 普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);
-   > 极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
+   - nodelay ：是否启用 nodelay模式，0不启用；1启用。
+   - interval ：协议内部工作的 interval，单位毫秒，比如 10ms或者 20ms
+   - resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
+   - nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
+   - 普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0);
+   - 极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
 2. 最大窗口：
    ```cpp
