@@ -333,11 +333,12 @@ extern "C" {
 // output callback can be setup like this: 'kcp->output = my_udp_output'
 ikcpcb* ikcp_create(IUINT32 conv, void *user);
 
-// set output function
-void ikcp_setoutput(ikcpcb *kcp, int (*output)(const char *buf, int len, ikcpcb *kcp, void *user));
-
 // release kcp control object
 void ikcp_release(ikcpcb *kcp);
+
+// set output callback, which will be invoked by kcp
+void ikcp_setoutput(ikcpcb *kcp, int (*output)(const char *buf, int len, 
+	ikcpcb *kcp, void *user));
 
 // user/upper level recv: returns size, returns below zero for EAGAIN
 int ikcp_recv(ikcpcb *kcp, char *buffer, int len);
@@ -391,6 +392,9 @@ void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
 
 // setup allocator
 void ikcp_allocator(void* (*new_malloc)(size_t), void (*new_free)(void*));
+
+// read conv
+IUINT32 ikcp_getconv(const void *ptr);
 
 
 #ifdef __cplusplus
