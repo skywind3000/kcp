@@ -1155,7 +1155,7 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current)
 // schedule ikcp_update (eg. implementing an epoll-like mechanism, 
 // or optimize ikcp_update when handling massive kcp connections)
 //---------------------------------------------------------------------
-IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
+IUINT32 ikcp_check(ikcpcb *kcp, IUINT32 current)
 {
 	IUINT32 ts_flush = kcp->ts_flush;
 	IINT32 tm_flush = 0x7fffffff;
@@ -1182,6 +1182,7 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 		const IKCPSEG *seg = iqueue_entry(p, const IKCPSEG, node);
 		IINT32 diff = _itimediff(seg->resendts, current);
 		if (diff <= 0) {
+			kcp->ts_flush = current;
 			return current;
 		}
 		if (diff < tm_packet) tm_packet = diff;

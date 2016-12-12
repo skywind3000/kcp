@@ -358,7 +358,7 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current);
 // Important to reduce unnacessary ikcp_update invoking. use it to 
 // schedule ikcp_update (eg. implementing an epoll-like mechanism, 
 // or optimize ikcp_update when handling massive kcp connections)
-IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
+IUINT32 ikcp_check(ikcpcb *kcp, IUINT32 current);
 
 // when you received a low level packet (eg. UDP packet), call it
 int ikcp_input(ikcpcb *kcp, const char *data, long size);
