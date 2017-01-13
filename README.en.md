@@ -45,7 +45,7 @@ There are two kinds of ARQ model responses: UNA (All packets before this number 
 KCP normal mode uses the same fair concession rules as TCP, i.e., the send window size is determined by: four factors including the size of the send cache, the size of the receive buffer at the receiving end, packet loss concession and slow start. However, when sending small data with high timeliness requirement, it is allowed to select skipping the latter two steps through configuration, and use only the first two items to control the transmission frequency, sacrificing some of the fairness and bandwidth utilization, in exchange for the effect of smooth transmission even when BT is opened.
 
 
-# 基本使用
+# Basic Usage
 
 1. Create KCP object:
 
@@ -178,8 +178,6 @@ For specifics please refer to: [Reliable Udp Benchmark](https://github.com/libin
 ![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/donation.png)
 
 Donation is welcome by using alipay, the money will be used to improve the protocol and documentation.
-
-Thanks to：明明、星仔、进、帆、颁钊、斌铨、晓丹、余争、虎、晟敢、徐玮、王川、赵刚强、胡知锋、万新朝、何新超、刘旸、侯宪辉、吴佩仪、华斌、如涛、胡坚。。。（早先的名单实在不好意思没记录下来）等同学的捐助与支持。
 
 
 twitter: https://twitter.com/skywind3000

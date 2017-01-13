@@ -1,12 +1,13 @@
 KCP - A Fast and Reliable ARQ Protocol
 ======================================
-[![Powered][2]][1] [![Build Status][4]][5] 
+[![Powered][2]][1] [![Build Status][4]][5]
 [1]: https://github.com/skywind3000/kcp
 [2]: http://skywind3000.github.io/word/images/kcp.svg
 [3]: https://raw.githubusercontent.com/skywind3000/kcp/master/kcp.svg
 [4]: https://api.travis-ci.org/skywind3000/kcp.svg?branch=master
 [5]: https://travis-ci.org/skywind3000/kcp
 
+[README in English](https://github.com/skywind3000/kcp/blob/master/README.en.md) 
 
 # 简介
 
