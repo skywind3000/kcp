@@ -165,7 +165,7 @@ Thanks to [zhangyuan](https://github.com/libinzhangyuan) the author of [asio-kcp
 - The enet is a good choice if your game allow 2 second lag.
 - **UDT is a bad idea**. It always sink into badly situation of more than serval seconds lag. And the recovery is not expected.
 - enet has the problem of lack of doc. And it has lots of functions that you may intrest.
-- kcp's doc is chinese. Good thing is the function detail which is writen in code is english. And you can use asio_kcp which is a good wrap.
+- kcp's doc is in both chinese and english. Good thing is the function detail which is writen in code is english. And you can use asio_kcp which is a good wrap.
 - The kcp is a simple thing. You will write more code if you want more feature.
 - UDT has a perfect doc. UDT may has more bug than others as I feeling.
 
