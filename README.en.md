@@ -126,11 +126,11 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
    ```
 
 
+
 # Document Indexing
 
 Both the use and configuration of the protocol is very simple, in most cases, after you read the above contents, basically you will be able to use it. If you need further fine control, such as changing the KCP memory allocator, or if you need more efficient large-scale scheduling of KCP links (such as more than 3,500 links), or to better combine with TCP, you can continue the extensive reading:
 
-- [Wiki Home](https://github.com/skywind3000/kcp/wiki)
 - [KCP Best Practice](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice)
 - [Integration with the Existing TCP Server](https://github.com/skywind3000/kcp/wiki/Cooperate-With-Tcp-Server)
 - [Transmission Data Encryption](https://github.com/skywind3000/kcp/wiki/Network-Encryption)
@@ -153,6 +153,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android has integrated kcptun using kcp protocol to accelerate shadowsocks, with good results
 - [kcpuv](https://github.com/elisaday/kcpuv): The kcpuv library developed with libuv, currently still in the early alpha phase.
 
+
 # Protocol Comparison
 
 If the network is never congested, KCP/TCP performance is similar; but the network itself is not reliable, and packet loss and jitter may be inevitable (otherwise why there are various reliable protocols). Compared in the intranet environment which is almost ideal, they have similar performance, but on the public Internet, under 3G / 4G network situation, or using the intranet packet loss simulation, the gap is obvious. The public network has an average of nearly 10% packet loss during peak times, which is even worse in wifi / 3g / 4g network, all of which will cause transmission congestion.
@@ -171,7 +172,9 @@ Thanks to [zhangyuan](https://github.com/libinzhangyuan) the author of [asio-kcp
 
 For specifics please refer to: [Reliable Udp Benchmark](https://github.com/libinzhangyuan/reliable_udp_bench_mark) and [KCP-Benchmark](https://github.com/skywind3000/kcp/wiki/KCP-Benchmark), for more guidance to the hesitant users.
 
+# KCP is used by
 
+See [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
 
 # Donation
 
