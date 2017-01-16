@@ -131,8 +131,8 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
 
 Both the use and configuration of the protocol is very simple, in most cases, after you read the above contents, basically you will be able to use it. If you need further fine control, such as changing the KCP memory allocator, or if you need more efficient large-scale scheduling of KCP links (such as more than 3,500 links), or to better combine with TCP, you can continue the extensive reading:
 
-- [KCP Best Practice](https://github.com/skywind3000/kcp/wiki/KCP---Best-Practice---EN)
-- [Integration with the Existing TCP Server](https://github.com/skywind3000/kcp/wiki/KCP---Best-Practice---EN)
+- [KCP Best Practice](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice-EN)
+- [Integration with the Existing TCP Server](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice-EN)
 - [Benchmarks](https://github.com/skywind3000/kcp/wiki/KCP-Benchmark)
 
 
