@@ -26,8 +26,22 @@ int udp_output(const char *buf, int len, ikcpcb *kcp, void *user)
 	return 0;
 }
 
+// Test result for CI to validate.
+struct TestResult
+{
+    int avgrtt;
+    int maxrtt;
+    int tx;
+    
+    TestResult() {
+        avgrtt = maxrtt = tx = 0;
+    }
+};
+
 // 测试用例
-void test(int mode)
+// @param ci Whether run in CI, for instance TravisCI.
+//      Check the test data and don't need to confirm when test done.
+void test(int mode, bool ci, TestResult* tr)
 {
 	// 创建模拟网络：丢包率10%，Rtt 60ms~125ms
 	vnet = new LatencySimulator(10, 60, 125);
@@ -142,7 +156,9 @@ void test(int mode)
 			count++;
 			if (rtt > (IUINT32)maxrtt) maxrtt = rtt;
 
-			printf("[RECV] mode=%d sn=%d rtt=%d\n", mode, (int)sn, (int)rtt);
+            if (!ci) {
+                printf("[RECV] mode=%d sn=%d rtt=%d\n", mode, (int)sn, (int)rtt);
+            }
 		}
 		if (next > 1000) break;
 	}
@@ -154,16 +170,53 @@ void test(int mode)
 
 	const char *names[3] = { "default", "normal", "fast" };
 	printf("%s mode result (%dms):\n", names[mode], (int)ts1);
-	printf("avgrtt=%d maxrtt=%d tx=%d\n", (int)(sumrtt / count), (int)maxrtt, (int)vnet->tx1);
-	printf("press enter to next ...\n");
-	char ch; scanf("%c", &ch);
+    printf("avgrtt=%d maxrtt=%d tx=%d\n", (int)(sumrtt / count), (int)maxrtt, (int)vnet->tx1);
+    
+    if (!ci) {
+        printf("press enter to next ...\n");
+        char ch; scanf("%c", &ch);
+    }
+    
+    // Save test result for CI.
+    tr->avgrtt = (int)(sumrtt / count);
+    tr->maxrtt = (int)maxrtt;
+    tr->tx = (int)vnet->tx1;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-	test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
-	test(1);	// 普通模式，关闭流控等
-	test(2);	// 快速模式，所有开关都打开，且关闭流控
+    bool ci = false;
+    
+    // Parse options by argv.
+    for (int i = 1; i < argc; i++) {
+        char * p = argv[i];
+        // Set the ci by option --ci
+        if (p[0] == '-' && p[1] == '-' && p[2] == 'c' && p[3] == 'i') {
+            ci = true;
+        }
+    }
+    
+    TestResult tr0, tr1, tr2;
+	test(0, ci, &tr0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
+	test(1, ci, &tr1);	// 普通模式，关闭流控等
+	test(2, ci, &tr2);	// 快速模式，所有开关都打开，且关闭流控
+    
+    // Validate test result for CI.
+    if (ci) {
+        if (tr0.avgrtt < tr1.avgrtt || tr1.avgrtt < tr2.avgrtt) {
+            printf("FAILED: Invalid avgrtt mode0=%d, mode1=%d, mode2=%d\n", tr0.avgrtt, tr1.avgrtt, tr2.avgrtt);
+            return 1;
+        }
+        if (tr0.maxrtt < tr1.maxrtt || tr1.maxrtt < tr2.maxrtt) {
+            printf("FAILED: Invalid maxrtt mode0=%d, mode1=%d, mode2=%d\n", tr0.maxrtt, tr1.maxrtt, tr2.maxrtt);
+            return 2;
+        }
+        if (tr0.tx > tr1.tx || tr1.tx > tr2.tx) {
+            printf("FAILED: Invalid tx mode0=%d, mode1=%d, mode2=%d\n", tr0.tx, tr1.tx, tr2.tx);
+            return 4;
+        }
+    }
+    
 	return 0;
 }
 
