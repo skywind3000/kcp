@@ -147,6 +147,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [node-kcp](https://github.com/leenjewel/node-kcp): node-js 的 KCP 接口  
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android 集成了 kcptun 使用 kcp协议加速 shadowsocks，效果不错
 - [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段。
+- [xkcptun](https://github.com/liudf0716/xkcptun): c语言实现的kcptun，主要用于openwrt, LEDE开发的路由器项目上
 
 # 协议比较
 
