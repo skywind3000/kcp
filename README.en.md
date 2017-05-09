@@ -151,7 +151,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android has integrated kcptun using kcp protocol to accelerate shadowsocks, with good results
 - [kcpuv](https://github.com/elisaday/kcpuv): The kcpuv library developed with libuv, currently still in the early alpha phase.
-
+- [xkcptun](https://github.com/liudf0716/xkcptun): C language implementation of kcptun, embedded-friendly for [LEDE](https://github.com/lede-project/source) and [OpenWrt](https://github.com/openwrt/openwrt) projects.
 
 # Protocol Comparison
 
