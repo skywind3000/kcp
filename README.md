@@ -154,8 +154,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [明日帝国](https://www.taptap.com/app/50664)：Game K17 的 《明日帝国》 （Google Play），使用 KCP 加速游戏消息，让全球玩家流畅联网
 - [仙灵大作战](https://www.taptap.com/app/27242)：4399 的 MOBA游戏，使用 KCP 优化游戏同步
-- [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速音视频串流，有效提高流畅性
-- [梦幻西游](http://xyq.163.com/)：《梦幻西游》使用 kcp 加速实时语音
+- [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速视频推流，有效提高流畅性
 - [BOBO](http://bobo.163.com/)：网易 BOBO 使用 kcp 加速主播推流
 - [云帆加速](http://www.yfcloud.com/)：使用 KCP 加速文件传输和视频推流，优化了台湾主播推流的流畅度
 
