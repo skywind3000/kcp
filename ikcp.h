@@ -385,8 +385,6 @@ int ikcp_waitsnd(const ikcpcb *kcp);
 // nc: 0:normal congestion control(default), 1:disable congestion control
 int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc);
 
-int ikcp_rcvbuf_count(const ikcpcb *kcp);
-int ikcp_sndbuf_count(const ikcpcb *kcp);
 
 void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
 
