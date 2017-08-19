@@ -236,7 +236,7 @@ typedef struct IQUEUEHEAD iqueue_head;
     #ifndef IWORDS_BIG_ENDIAN
         #if defined(__hppa__) || \
             defined(__m68k__) || defined(mc68000) || defined(_M_M68K) || \
-            (defined(__MIPS__) && defined(__MISPEB__)) || \
+            (defined(__MIPS__) && defined(__MIPSEB__)) || \
             defined(__ppc__) || defined(__POWERPC__) || defined(_M_PPC) || \
             defined(__sparc__) || defined(__powerpc__) || \
             defined(__mc68000__) || defined(__s390x__) || defined(__s390__)
