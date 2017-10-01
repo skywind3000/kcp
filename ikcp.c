@@ -637,6 +637,13 @@ static void ikcp_ack_push(ikcpcb *kcp, IUINT32 sn, IUINT32 ts)
 		size_t newblock;
 
 		for (newblock = 8; newblock < newsize; newblock <<= 1);
+
+		/* newblock < 2^29 so that malloc doesn't overflow uint32 */
+		if (sizeof(size_t) == 4U && newblock >= 536870912) {
+			assert(0);
+			abort();
+		}
+
 		acklist = (IUINT32*)ikcp_malloc(newblock * sizeof(IUINT32) * 2);
 
 		if (acklist == NULL) {
