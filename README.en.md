@@ -150,6 +150,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): Lua extension of KCP, applicable for Lua server
 - [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
+- [nysocks](https://github.com/oyyd/nysocks): Nysocks provides proxy services base on libuv and kcp for nodejs users. Both SOCKS5 and ss protocols are supported in the client.
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android has integrated kcptun using kcp protocol to accelerate shadowsocks, with good results
 - [kcpuv](https://github.com/elisaday/kcpuv): The kcpuv library developed with libuv, currently still in the early alpha phase.
 - [xkcptun](https://github.com/liudf0716/xkcptun): C language implementation of kcptun, embedded-friendly for [LEDE](https://github.com/lede-project/source) and [OpenWrt](https://github.com/openwrt/openwrt) projects.

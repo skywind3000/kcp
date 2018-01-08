@@ -149,6 +149,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [tokio-kcp](https://github.com/Matrix-Zhang/tokio_kcp)：rust tokio 的 kcp 集成
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): KCP的 Lua扩展，用于 Lua服务器
 - [node-kcp](https://github.com/leenjewel/node-kcp): node-js 的 KCP 接口  
+- [nysocks](https://github.com/oyyd/nysocks): 基于libuv实现的[node-addon](https://nodejs.org/api/addons.html)，提供nodejs版本的代理服务，客户端接入支持SOCKS5和ss两种协议
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android 集成了 kcptun 使用 kcp协议加速 shadowsocks，效果不错
 - [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段
 - [Lantern](https://getlantern.org/)：更好的 VPN，Github 50000 星，使用 kcpgo 加速
