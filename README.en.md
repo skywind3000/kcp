@@ -1,7 +1,7 @@
 KCP - A Fast and Reliable ARQ Protocol
 ======================================
 
-[![Powered][2]][1] [![Build Status][4]][5] 
+[![Powered][2]][1] [![Build Status][4]][5]
 
 [1]: https://github.com/skywind3000/kcp
 [2]: http://skywind3000.github.io/word/images/kcp.svg
@@ -52,9 +52,9 @@ KCP normal mode uses the same fair concession rules as TCP, i.e., the send windo
 1. Create KCP object:
 
    ```cpp
-   // Initialize the kcp object, conv is an integer that represents the session number, 
-   // same as the conv of tcp, both communication sides shall ensure the same conv, 
-   // so that mutual data packets can be recognized, user is a pointer which will be 
+   // Initialize the kcp object, conv is an integer that represents the session number,
+   // same as the conv of tcp, both communication sides shall ensure the same conv,
+   // so that mutual data packets can be recognized, user is a pointer which will be
    // passed to the callback function.
    ikcpcb *kcp = ikcp_create(conv, user);
    ```
@@ -62,9 +62,9 @@ KCP normal mode uses the same fair concession rules as TCP, i.e., the send windo
 2. Set the callback function:
 
    ```cpp
-   // KCP lower layer protocol output function, which will be called by KCP when it 
-   // needs to send data, buf/len represents the buffer and data length. 
-   // user refers to the incoming value at the time the kcp object is created to 
+   // KCP lower layer protocol output function, which will be called by KCP when it
+   // needs to send data, buf/len represents the buffer and data length.
+   // user refers to the incoming value at the time the kcp object is created to
    // distinguish between multiple KCP objects
    int udp_output(const char *buf, int len, ikcpcb *kcp, void *user)
    {
@@ -77,9 +77,9 @@ KCP normal mode uses the same fair concession rules as TCP, i.e., the send windo
 3. Call update in an interval:
 
    ```cpp
-   // Call ikcp_update at a certain frequency to update the kcp state, and pass in 
-   // the current clock (in milliseconds). If the call is executed every 10ms, or 
-   // ikcp_check is used to determine time of the next call for update, no need to 
+   // Call ikcp_update at a certain frequency to update the kcp state, and pass in
+   // the current clock (in milliseconds). If the call is executed every 10ms, or
+   // ikcp_check is used to determine time of the next call for update, no need to
    // call every time;
    ikcp_update(kcp, millisec);
    ```
@@ -122,7 +122,7 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
 
 4. Minimum RTO:
 
-   No matter TCP or KCP, they have the limitation for the minimum RTO when calculating the RTO, even if the calculated RTO is 40ms, as the default RTO is 100ms, the protocol can only detect packet loss after 100ms, which is 30ms in the fast mode, and the value can be manually changed: 
+   No matter TCP or KCP, they have the limitation for the minimum RTO when calculating the RTO, even if the calculated RTO is 40ms, as the default RTO is 100ms, the protocol can only detect packet loss after 100ms, which is 30ms in the fast mode, and the value can be manually changed:
    ```cpp
    kcp->rx_minrto = 10;
    ```
@@ -149,7 +149,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): The csharp migration of kcp, containing the session management, which can access the above kcp-go server.
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): Lua extension of KCP, applicable for Lua server
-- [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
+- [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js
 - [nysocks](https://github.com/oyyd/nysocks): Nysocks provides proxy services base on libuv and kcp for nodejs users. Both SOCKS5 and ss protocols are supported in the client.
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android has integrated kcptun using kcp protocol to accelerate shadowsocks, with good results
 - [kcpuv](https://github.com/elisaday/kcpuv): The kcpuv library developed with libuv, currently still in the early alpha phase.
@@ -167,7 +167,7 @@ Thanks to [zhangyuan](https://github.com/libinzhangyuan) the author of [asio-kcp
 - The lag is less than 1 second when network lag happen. **3 times better than enet** when lag happen.
 - The enet is a good choice if your game allow 2 second lag.
 - **UDT is a bad idea**. It always sink into badly situation of more than serval seconds lag. And the recovery is not expected.
-- enet has the problem of lack of doc. And it has lots of functions that you may intrest.
+- enet has the problem of lack of doc. And it has lots of functions that you may have interest in.
 - kcp's doc is in both chinese and english. Good thing is the function detail which is writen in code is english. And you can use asio_kcp which is a good wrap.
 - The kcp is a simple thing. You will write more code if you want more feature.
 - UDT has a perfect doc. UDT may has more bug than others as I feeling.
