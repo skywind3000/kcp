@@ -145,6 +145,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [v2ray](https://www.v2ray.com)：Well-known proxy software, Shadowsocks replacement, integrated with kcp protocol after 1.17, using UDP transmission, no data packet features.
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): Use the complete UDP network library of KCP, complete implementation of UDP-based link state management, session control and KCP protocol scheduling, etc.
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Implementation of Java version of KCP protocol.
+- [kcp-netty](https://github.com/szhnet/kcp-netty)：Java implementation of KCP based on Netty.
 - [kcp-go](https://github.com/xtaci/kcp-go): High-security GO language implementation of kcp, including simple implementation of UDP session management, as a base library for subsequent development.
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): The csharp migration of kcp, containing the session management, which can access the above kcp-go server.
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
