@@ -142,6 +142,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [v2ray](https://www.v2ray.com)：著名代理软件，Shadowsocks 代替者，1.17后集成了 kcp协议，使用UDP传输，无数据包特征。
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Java版本 KCP协议实现。
+- [kcp-netty](https://github.com/szhnet/kcp-netty)：kcp的Java语言实现，基于netty。
 - [kcp-go](https://github.com/xtaci/kcp-go): 高安全性的kcp的 GO语言实现，包含 UDP会话管理的简单实现，可以作为后续开发的基础库。 
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的 csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
 - [kcp-rs](https://github.com/en/kcp-rs): KCP的 rust移植
@@ -149,11 +150,13 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [tokio-kcp](https://github.com/Matrix-Zhang/tokio_kcp)：rust tokio 的 kcp 集成
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): KCP的 Lua扩展，用于 Lua服务器
 - [node-kcp](https://github.com/leenjewel/node-kcp): node-js 的 KCP 接口  
+- [nysocks](https://github.com/oyyd/nysocks): 基于libuv实现的[node-addon](https://nodejs.org/api/addons.html)，提供nodejs版本的代理服务，客户端接入支持SOCKS5和ss两种协议
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android 集成了 kcptun 使用 kcp协议加速 shadowsocks，效果不错
 - [kcpuv](https://github.com/elisaday/kcpuv): 使用 libuv开发的kcpuv库，目前还在 Demo阶段
 - [Lantern](https://getlantern.org/)：更好的 VPN，Github 50000 星，使用 kcpgo 加速
 - [rpcx](https://github.com/smallnest/rpcx) ：RPC 框架，1000+ 星，使用 kcpgo 加速 RPC
 - [xkcptun](https://github.com/liudf0716/xkcptun): c语言实现的kcptun，主要用于[OpenWrt](https://github.com/openwrt/openwrt), [LEDE](https://github.com/lede-project/source)开发的路由器项目上
+- [et-frame](https://github.com/egametang/ET): C#前后端框架(前端unity3d)，统一用C#开发游戏，实现了前后端kcp协议
 
 # 商业案例
 

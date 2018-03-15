@@ -145,11 +145,13 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [v2ray](https://www.v2ray.com)：Well-known proxy software, Shadowsocks replacement, integrated with kcp protocol after 1.17, using UDP transmission, no data packet features.
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): Use the complete UDP network library of KCP, complete implementation of UDP-based link state management, session control and KCP protocol scheduling, etc.
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Implementation of Java version of KCP protocol.
+- [kcp-netty](https://github.com/szhnet/kcp-netty)：Java implementation of KCP based on Netty.
 - [kcp-go](https://github.com/xtaci/kcp-go): High-security GO language implementation of kcp, including simple implementation of UDP session management, as a base library for subsequent development.
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): The csharp migration of kcp, containing the session management, which can access the above kcp-go server.
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): Lua extension of KCP, applicable for Lua server
 - [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
+- [nysocks](https://github.com/oyyd/nysocks): Nysocks provides proxy services base on libuv and kcp for nodejs users. Both SOCKS5 and ss protocols are supported in the client.
 - [shadowsocks-android](https://github.com/shadowsocks/shadowsocks-android): Shadowsocks for android has integrated kcptun using kcp protocol to accelerate shadowsocks, with good results
 - [kcpuv](https://github.com/elisaday/kcpuv): The kcpuv library developed with libuv, currently still in the early alpha phase.
 - [xkcptun](https://github.com/liudf0716/xkcptun): C language implementation of kcptun, embedded-friendly for [LEDE](https://github.com/lede-project/source) and [OpenWrt](https://github.com/openwrt/openwrt) projects.
