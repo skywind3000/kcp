@@ -33,7 +33,7 @@ const IUINT32 IKCP_CMD_WINS = 84;		// cmd: window size (tell)
 const IUINT32 IKCP_ASK_SEND = 1;		// need to send IKCP_CMD_WASK
 const IUINT32 IKCP_ASK_TELL = 2;		// need to send IKCP_CMD_WINS
 const IUINT32 IKCP_WND_SND = 32;
-const IUINT32 IKCP_WND_RCV = 32;
+const IUINT32 IKCP_WND_RCV = 256;       // must >= max fragment size
 const IUINT32 IKCP_MTU_DEF = 1400;
 const IUINT32 IKCP_ACK_FAST	= 3;
 const IUINT32 IKCP_INTERVAL	= 100;
@@ -285,7 +285,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 	kcp->fastresend = 0;
 	kcp->nocwnd = 0;
 	kcp->xmit = 0;
-    kcp->dead_link = IKCP_DEADLINK;
+	kcp->dead_link = IKCP_DEADLINK;
 	kcp->output = NULL;
 	kcp->writelog = NULL;
 
@@ -1250,8 +1250,8 @@ int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd)
 		if (sndwnd > 0) {
 			kcp->snd_wnd = sndwnd;
 		}
-		if (rcvwnd > 0) {
-			kcp->rcv_wnd = rcvwnd;
+		if (rcvwnd > 0) {   // must >= max fragment size
+			kcp->rcv_wnd = _imax_(rcvwnd, 256);
 		}
 	}
 	return 0;
