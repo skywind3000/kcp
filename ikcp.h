@@ -366,6 +366,9 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size);
 // flush pending data
 void ikcp_flush(ikcpcb *kcp);
 
+// flush acknowledges
+void ikcp_flushacks(ikcpcb *kcp);
+
 // check the size of next message in the recv queue
 int ikcp_peeksize(const ikcpcb *kcp);
 

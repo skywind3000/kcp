@@ -1272,3 +1272,46 @@ IUINT32 ikcp_getconv(const void *ptr)
 }
 
 
+//---------------------------------------------------------------------
+// ikcp_flushacks
+//---------------------------------------------------------------------
+void ikcp_flushacks(ikcpcb *kcp)
+{
+	int count = kcp->ackcount;
+	if (count == 0) return;
+
+	char *buffer = kcp->buffer;
+	char *ptr = buffer;
+	int size, i;
+	IKCPSEG seg;
+
+	seg.conv = kcp->conv;
+	seg.cmd = IKCP_CMD_ACK;
+	seg.frg = 0;
+	seg.wnd = ikcp_wnd_unused(kcp);
+	seg.una = kcp->rcv_nxt;
+	seg.len = 0;
+	seg.sn = 0;
+	seg.ts = 0;
+
+	// flush acknowledges
+	for (i = 0; i < count; i++) {
+		size = (int)(ptr - buffer);
+		if (size + (int)IKCP_OVERHEAD > (int)kcp->mtu) {
+			ikcp_output(kcp, buffer, size);
+			ptr = buffer;
+		}
+		ikcp_ack_get(kcp, i, &seg.sn, &seg.ts);
+		ptr = ikcp_encode_seg(ptr, &seg);
+	}
+
+	kcp->ackcount = 0;
+
+	// flash remain segments
+	size = (int)(ptr - buffer);
+	if (size > 0) {
+		ikcp_output(kcp, buffer, size);
+	}
+}
+
+
