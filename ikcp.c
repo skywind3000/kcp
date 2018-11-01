@@ -772,7 +772,7 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 
 		size -= IKCP_OVERHEAD;
 
-		if ((long)size < (long)len) return -2;
+		if ((long)size < (long)len || (int)len < 0) return -2;
 
 		if (cmd != IKCP_CMD_PUSH && cmd != IKCP_CMD_ACK &&
 			cmd != IKCP_CMD_WASK && cmd != IKCP_CMD_WINS) 
