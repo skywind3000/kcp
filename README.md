@@ -200,7 +200,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 欢迎关注
 
 KCP交流群：364933586（QQ群号），KCP集成，调优，网络传输以及相关技术讨论
-QQ群已满千人，目前无法再加，请加 gitter 群：https://gitter.im/skywind3000/KCP
+Gitter 群：https://gitter.im/skywind3000/KCP
 
 blog: http://www.skywind.me
 
