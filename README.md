@@ -2,6 +2,8 @@ KCP - A Fast and Reliable ARQ Protocol
 ======================================
 
 [![Powered][2]][1] [![Build Status][4]][5]
+[![Backers on Open Collective](https://opencollective.com/kcp/backers/badge.svg)](#backers)
+ [![Sponsors on Open Collective](https://opencollective.com/kcp/sponsors/badge.svg)](#sponsors) 
 
 [1]: https://github.com/skywind3000/kcp
 [2]: http://skywind3000.github.io/word/images/kcp.svg
@@ -200,8 +202,38 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 欢迎关注
 
 KCP交流群：364933586（QQ群号），KCP集成，调优，网络传输以及相关技术讨论
-QQ群已满千人，目前无法再加，请加 gitter 群：https://gitter.im/skywind3000/KCP
+Gitter 群：https://gitter.im/skywind3000/KCP
 
 blog: http://www.skywind.me
 
 zhihu: https://www.zhihu.com/people/skywind3000
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/skywind3000/kcp/graphs/contributors"><img src="https://opencollective.com/kcp/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/kcp#backer)]
+
+<a href="https://opencollective.com/kcp#backers" target="_blank"><img src="https://opencollective.com/kcp/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/kcp#sponsor)]
+
+<a href="https://opencollective.com/kcp/sponsor/0/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/1/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/2/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/3/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/4/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/5/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/6/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/7/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/8/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/kcp/sponsor/9/website" target="_blank"><img src="https://opencollective.com/kcp/sponsor/9/avatar.svg"></a>
+
+
