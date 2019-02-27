@@ -191,13 +191,6 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 
 
-## Contributors
-
-This project exists thanks to all the people who contribute. 
-<a href="https://github.com/skywind3000/kcp/graphs/contributors"><img src="https://opencollective.com/kcp/contributors.svg?width=890&button=false" /></a>
-
-
-
 
 # 欢迎捐赠
 
@@ -216,3 +209,12 @@ Gitter 群：https://gitter.im/skywind3000/KCP
 blog: http://www.skywind.me
 
 zhihu: https://www.zhihu.com/people/skywind3000
+
+
+
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/skywind3000/kcp/graphs/contributors"><img src="https://opencollective.com/kcp/contributors.svg?width=890&button=false" /></a>
+
