@@ -143,6 +143,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [kcptun](https://github.com/xtaci/kcptun): High-speed remote port forwarding based (tunnel) on kcp-go, with ssh-D, it allows smoother online video viewing than finalspeed.
 - [dog-tunnel](https://github.com/vzex/dog-tunnel): Network tunnel developed by GO, using KCP to greatly improve the transmission speed, and migrated a GO version of the KCP.
 - [v2ray](https://www.v2ray.com)：Well-known proxy software, Shadowsocks replacement, integrated with kcp protocol after 1.17, using UDP transmission, no data packet features.
+- [HP-Socket](https://github.com/ldcsaa/HP-Socket): High Performance TCP/UDP/HTTP Communication Component.
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): Use the complete UDP network library of KCP, complete implementation of UDP-based link state management, session control and KCP protocol scheduling, etc.
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Implementation of Java version of KCP protocol.
 - [kcp-netty](https://github.com/szhnet/kcp-netty)：Java implementation of KCP based on Netty.

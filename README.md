@@ -142,6 +142,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [kcptun](https://github.com/xtaci/kcptun): 基于 kcp-go做的高速远程端口转发(隧道) ，配合ssh -D，可以比 shadowsocks 更流畅的看在线视频。
 - [dog-tunnel](https://github.com/vzex/dog-tunnel): GO开发的网络隧道，使用 KCP极大的改进了传输速度，并移植了一份 GO版本 KCP
 - [v2ray](https://www.v2ray.com)：著名代理软件，Shadowsocks 代替者，1.17后集成了 kcp协议，使用UDP传输，无数据包特征。
+- [HP-Socket](https://github.com/ldcsaa/HP-Socket)：高性能网络通信框架 HP-Socket。
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Java版本 KCP协议实现。
 - [kcp-netty](https://github.com/szhnet/kcp-netty)：kcp的Java语言实现，基于netty。
