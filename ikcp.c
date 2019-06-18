@@ -467,7 +467,7 @@ int ikcp_peeksize(const ikcpcb *kcp)
 int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 {
 	IKCPSEG *seg;
-	int count, i;
+	IUINT32 count, i;
 
 	assert(kcp->mss > 0);
 	if (len < 0) return -1;
