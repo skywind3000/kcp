@@ -66,7 +66,7 @@ static inline const char *ikcp_decode8u(const char *p, unsigned char *c)
 /* encode 16 bits unsigned int (lsb) */
 static inline char *ikcp_encode16u(char *p, unsigned short w)
 {
-#if IWORDS_BIG_ENDIAN
+#if IWORDS_BIG_ENDIAN || IWORDS_MUST_ALIGN
 	*(unsigned char*)(p + 0) = (w & 255);
 	*(unsigned char*)(p + 1) = (w >> 8);
 #else
@@ -79,7 +79,7 @@ static inline char *ikcp_encode16u(char *p, unsigned short w)
 /* decode 16 bits unsigned int (lsb) */
 static inline const char *ikcp_decode16u(const char *p, unsigned short *w)
 {
-#if IWORDS_BIG_ENDIAN
+#if IWORDS_BIG_ENDIAN || IWORDS_MUST_ALIGN
 	*w = *(const unsigned char*)(p + 1);
 	*w = *(const unsigned char*)(p + 0) + (*w << 8);
 #else
@@ -92,7 +92,7 @@ static inline const char *ikcp_decode16u(const char *p, unsigned short *w)
 /* encode 32 bits unsigned int (lsb) */
 static inline char *ikcp_encode32u(char *p, IUINT32 l)
 {
-#if IWORDS_BIG_ENDIAN
+#if IWORDS_BIG_ENDIAN || IWORDS_MUST_ALIGN
 	*(unsigned char*)(p + 0) = (unsigned char)((l >>  0) & 0xff);
 	*(unsigned char*)(p + 1) = (unsigned char)((l >>  8) & 0xff);
 	*(unsigned char*)(p + 2) = (unsigned char)((l >> 16) & 0xff);
@@ -107,7 +107,7 @@ static inline char *ikcp_encode32u(char *p, IUINT32 l)
 /* decode 32 bits unsigned int (lsb) */
 static inline const char *ikcp_decode32u(const char *p, IUINT32 *l)
 {
-#if IWORDS_BIG_ENDIAN
+#if IWORDS_BIG_ENDIAN || IWORDS_MUST_ALIGN
 	*l = *(const unsigned char*)(p + 3);
 	*l = *(const unsigned char*)(p + 2) + (*l << 8);
 	*l = *(const unsigned char*)(p + 1) + (*l << 8);
@@ -741,7 +741,7 @@ void ikcp_parse_data(ikcpcb *kcp, IKCPSEG *newseg)
 //---------------------------------------------------------------------
 int ikcp_input(ikcpcb *kcp, const char *data, long size)
 {
-	IUINT32 una = kcp->snd_una;
+	IUINT32 prev_una = kcp->snd_una;
 	IUINT32 maxack = 0;
 	int flag = 0;
 
@@ -856,7 +856,7 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 		ikcp_parse_fastack(kcp, maxack);
 	}
 
-	if (_itimediff(kcp->snd_una, una) > 0) {
+	if (_itimediff(kcp->snd_una, prev_una) > 0) {
 		if (kcp->cwnd < kcp->rmt_wnd) {
 			IUINT32 mss = kcp->mss;
 			if (kcp->cwnd < kcp->ssthresh) {
