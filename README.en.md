@@ -177,7 +177,7 @@ Thanks to [zhangyuan](https://github.com/libinzhangyuan) the author of [asio-kcp
 
 For specifics please refer to: [Reliable Udp Benchmark](https://github.com/libinzhangyuan/reliable_udp_bench_mark) and [KCP-Benchmark](https://github.com/skywind3000/kcp/wiki/KCP-Benchmark), for more guidance to the hesitant users.
 
-MMO Engine [spatialOS](https://improbable.io/spatialOS) has a benchmark report on KCP/TCP/RakNet:
+MMO Engine [SpatialOS](https://improbable.io/spatialOS) has a benchmark report on KCP/TCP/RakNet:
 
 ![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
 

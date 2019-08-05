@@ -192,7 +192,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 具体见：[横向比较](https://github.com/libinzhangyuan/reliable_udp_bench_mark) 和 [评测数据](https://github.com/skywind3000/kcp/wiki/KCP-Benchmark)，为犹豫选择的人提供了更多指引。
 
-大型多人游戏服务端引擎 [spatialOS](https://improbable.io/spatialOS) 在集成 KCP 协议后做了同 TCP/RakNet 的评测：
+大型多人游戏服务端引擎 [SpatialOS](https://improbable.io/spatialOS) 在集成 KCP 协议后做了同 TCP/RakNet 的评测：
 
 ![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
 
