@@ -200,7 +200,9 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [Kcp a new low latency secure network stack](https://improbable.io/blog/kcp-a-new-low-latency-secure-network-stack)
 
+# 项目历史
 
+See [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
 
 # 欢迎捐赠
 
