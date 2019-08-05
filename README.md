@@ -170,6 +170,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 - [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速视频推流，有效提高流畅性
 - [BOBO](http://bobo.163.com/)：网易 BOBO 使用 kcp 加速主播推流
 - [云帆加速](http://www.yfcloud.com/)：使用 KCP 加速文件传输和视频推流，优化了台湾主播推流的流畅度
+- [SpatialOS](https://improbable.io/spatialOS): 大型多人分布式游戏服务端引擎，BigWorld 的后继者，使用 KCP 加速数据传输。
 
 欢迎告知更多案例
 
@@ -191,12 +192,17 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 具体见：[横向比较](https://github.com/libinzhangyuan/reliable_udp_bench_mark) 和 [评测数据](https://github.com/skywind3000/kcp/wiki/KCP-Benchmark)，为犹豫选择的人提供了更多指引。
 
+大型多人游戏服务端引擎 [spatialOS](https://improbable.io/spatialOS) 在集成 KCP 协议后做了同 TCP/RakNet 的评测：
+
+![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
+
+对比了在服务端刷新率为 60 Hz 同时维护 50 个角色时的响应时间，详细对比报告见 《[Kcp a new low latency secure network stack](https://improbable.io/blog/kcp-a-new-low-latency-secure-network-stack)》。
 
 
 
 # 欢迎捐赠
 
-![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/donation.png)
+![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/images/donation.png)
 
 欢迎使用支付宝手扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于持续优化 KCP协议以及完善文档。
 
