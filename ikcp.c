@@ -43,6 +43,7 @@ const IUINT32 IKCP_THRESH_INIT = 2;
 const IUINT32 IKCP_THRESH_MIN = 2;
 const IUINT32 IKCP_PROBE_INIT = 7000;		// 7 secs to probe window size
 const IUINT32 IKCP_PROBE_LIMIT = 120000;	// up to 120 secs to probe window
+const IUINT32 IKCP_FASTACK_LIMIT = 5;		// max times to trigger fastack
 
 
 //---------------------------------------------------------------------
@@ -283,6 +284,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 	kcp->logmask = 0;
 	kcp->ssthresh = IKCP_THRESH_INIT;
 	kcp->fastresend = 0;
+	kcp->fastlimit = IKCP_FASTACK_LIMIT;
 	kcp->nocwnd = 0;
 	kcp->xmit = 0;
 	kcp->dead_link = IKCP_DEADLINK;
@@ -1062,11 +1064,14 @@ void ikcp_flush(ikcpcb *kcp)
 			lost = 1;
 		}
 		else if (segment->fastack >= resent) {
-			needsend = 1;
-			segment->xmit++;
-			segment->fastack = 0;
-			segment->resendts = current + segment->rto;
-			change++;
+			if ((int)segment->xmit <= kcp->fastlimit || 
+				kcp->fastlimit <= 0) {
+				needsend = 1;
+				segment->xmit++;
+				segment->fastack = 0;
+				segment->resendts = current + segment->rto;
+				change++;
+			}
 		}
 
 		if (needsend) {
