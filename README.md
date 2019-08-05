@@ -196,7 +196,9 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 ![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
 
-对比了在服务端刷新率为 60 Hz 同时维护 50 个角色时的响应时间，详细对比报告见 《[Kcp a new low latency secure network stack](https://improbable.io/blog/kcp-a-new-low-latency-secure-network-stack)》。
+对比了在服务端刷新率为 60 Hz 同时维护 50 个角色时的响应时间，详细对比报告见：
+
+- [Kcp a new low latency secure network stack](https://improbable.io/blog/kcp-a-new-low-latency-secure-network-stack)
 
 
 
