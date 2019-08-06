@@ -225,7 +225,7 @@ typedef struct IQUEUEHEAD iqueue_head;
 
 
 //---------------------------------------------------------------------
-// WORD ORDER
+// BYTE ORDER & ALIGNMENT
 //---------------------------------------------------------------------
 #ifndef IWORDS_BIG_ENDIAN
     #ifdef _BIG_ENDIAN_
@@ -248,6 +248,17 @@ typedef struct IQUEUEHEAD iqueue_head;
     #endif
 #endif
 
+#ifndef IWORDS_MUST_ALIGN
+	#if defined(__i386__) || defined(__i386) || defined(_i386_)
+		#define IWORDS_MUST_ALIGN 0
+	#elif defined(_M_IX86) || defined(_X86_) || defined(__x86_64__)
+		#define IWORDS_MUST_ALIGN 0
+	#elif defined(__amd64) || defined(__amd64__)
+		#define IWORDS_MUST_ALIGN 0
+	#else
+		#define IWORDS_MUST_ALIGN 1
+	#endif
+#endif
 
 
 //=====================================================================
@@ -298,6 +309,7 @@ struct IKCPCB
 	void *user;
 	char *buffer;
 	int fastresend;
+	int fastlimit;
 	int nocwnd, stream;
 	int logmask;
 	int (*output)(const char *buf, int len, struct IKCPCB *kcp, void *user);
