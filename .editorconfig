@@ -1,0 +1,17 @@
+# top-most EditorConfig file
+root = true
+
+# Windows-style newlines with a newline ending every file
+[*]
+end_of_line = crlf
+insert_final_newline = true
+
+[*.{c,cpp,h}]
+charset = utf-8
+indent_style = tab
+
+# Matches the exact files either CMakeLists.txt or .travis.yml
+[{CMakeLists.txt,.travis.yml}]
+charset = utf-8
+indent_style = space
+indent_size = 4
