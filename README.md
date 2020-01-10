@@ -234,13 +234,11 @@ For more information, please see the [Success Stories](https://github.com/skywin
 欢迎关注
 
 KCP交流群：364933586（QQ群号），KCP集成，调优，网络传输以及相关技术讨论
+
 Gitter 群：https://gitter.im/skywind3000/KCP
 
 blog: http://www.skywind.me
 
-zhihu: 
-
-twitter: [https://twitter.com/skywind3000](https://twitter.com/skywind3000)
 
 
 ## Contributors
