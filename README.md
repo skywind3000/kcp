@@ -209,7 +209,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 Kcptun 的作者 xtaci 是我的大学同学，我俩都是学通信的，经常在一起研究如何进行传输优化。
 
-喜欢本项目请关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
+喜欢本项目欢迎关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
 
 # 关于协议
 
