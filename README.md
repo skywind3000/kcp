@@ -209,6 +209,8 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 Kcptun 的作者 xtaci 是我的大学同学，我俩都是学通信的，经常在一起研究如何进行传输优化。
 
+喜欢本项目请关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
+
 # 关于协议
 
 近年来，网络游戏和各类社交网络都在成几何倍数的增长，不管网络游戏还是各类互动社交网络，交互性和复杂度都在迅速提高，都需要在极短的时间内将数据同时投递给大量用户，因此传输技术自然变为未来制约发展的一个重要因素，而开源界里各种著名的传输协议，如 raknet/enet 之类，一发布都是整套协议栈一起发布，这种形式是不利于多样化的，我的项目只能选择用或者不用你，很难选择 “部分用你”，然而你一套协议栈设计的再好，是非常难以满足不同角度的各种需求的。
@@ -218,6 +220,7 @@ Kcptun 的作者 xtaci 是我的大学同学，我俩都是学通信的，经常
 未来传输方面的解决方案必然是根据使用场景深度定制的，因此给大家一个可以自由组合的 “协议单元” ，方便大家集成在自己的协议栈中。
 
 For more information, please see the [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
+
 
 # 欢迎捐赠
 
@@ -235,7 +238,7 @@ Gitter 群：https://gitter.im/skywind3000/KCP
 
 blog: http://www.skywind.me
 
-zhihu: https://www.zhihu.com/people/skywind3000
+zhihu: 
 
 twitter: [https://twitter.com/skywind3000](https://twitter.com/skywind3000)
 
