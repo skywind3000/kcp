@@ -47,7 +47,7 @@ There are two kinds of ARQ model responses: UNA (All packets before this number 
 KCP normal mode uses the same fair concession rules as TCP, i.e., the send window size is determined by: four factors including the size of the send cache, the size of the receive buffer at the receiving end, packet loss concession and slow start. However, when sending small data with high timeliness requirement, it is allowed to select skipping the latter two steps through configuration, and use only the first two items to control the transmission frequency, sacrificing some of the fairness and bandwidth utilization, in exchange for the effect of smooth transmission even when BT is opened.
 
 
-# Quick install
+# Quick Install
 
 You can download and install kcp using the [vcpkg](https://github.com/Microsoft/vcpkg) dependency manager:
 
