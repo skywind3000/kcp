@@ -59,7 +59,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
     ./vcpkg integrate install
     ./vcpkg install kcp
 
-vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。如果版本过时，请在vcpkg存储库上[创建问题或请求请求](https://github.com/Microsoft/vcpkg)。
+vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。如果版本过时，请在vcpkg存储库上[创建issue或提出PR](https://github.com/Microsoft/vcpkg)。
 
 # 基本使用
 
