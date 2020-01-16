@@ -49,6 +49,18 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
    KCP正常模式同TCP一样使用公平退让法则，即发送窗口大小由：发送缓存大小、接收端剩余接收缓存大小、丢包退让及慢启动这四要素决定。但传送及时性要求很高的小数据时，可选择通过配置跳过后两步，仅用前两项来控制发送频率。以牺牲部分公平性及带宽利用率之代价，换取了开着BT都能流畅传输的效果。
 
 
+# 快速安装
+
+您可以使用[vcpkg](https://github.com/Microsoft/vcpkg)库管理器下载并安装kcp:
+
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    ./vcpkg install kcp
+
+vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。如果版本过时，请在vcpkg存储库上[创建问题或请求请求](https://github.com/Microsoft/vcpkg)。
+
 # 基本使用
 
 1. 创建 KCP对象：
