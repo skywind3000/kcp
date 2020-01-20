@@ -813,7 +813,7 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 				}
 			}
 			if (ikcp_canlog(kcp, IKCP_LOG_IN_ACK)) {
-				ikcp_log(kcp, IKCP_LOG_IN_DATA, 
+				ikcp_log(kcp, IKCP_LOG_IN_ACK, 
 					"input ack: sn=%lu rtt=%ld rto=%ld", (unsigned long)sn, 
 					(long)_itimediff(kcp->current, ts),
 					(long)kcp->rx_rto);
