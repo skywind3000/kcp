@@ -49,6 +49,18 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
    KCP正常模式同TCP一样使用公平退让法则，即发送窗口大小由：发送缓存大小、接收端剩余接收缓存大小、丢包退让及慢启动这四要素决定。但传送及时性要求很高的小数据时，可选择通过配置跳过后两步，仅用前两项来控制发送频率。以牺牲部分公平性及带宽利用率之代价，换取了开着BT都能流畅传输的效果。
 
 
+# 快速安装
+
+您可以使用[vcpkg](https://github.com/Microsoft/vcpkg)库管理器下载并安装kcp:
+
+    git clone https://github.com/Microsoft/vcpkg.git
+    cd vcpkg
+    ./bootstrap-vcpkg.sh
+    ./vcpkg integrate install
+    ./vcpkg install kcp
+
+vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。如果版本过时，请在vcpkg存储库上[创建issue或提出PR](https://github.com/Microsoft/vcpkg)。
+
 # 基本使用
 
 1. 创建 KCP对象：
@@ -141,11 +153,12 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [kcptun](https://github.com/xtaci/kcptun): 基于 kcp-go做的高速远程端口转发(隧道) ，配合ssh -D，可以比 shadowsocks 更流畅的看在线视频。
 - [dog-tunnel](https://github.com/vzex/dog-tunnel): GO开发的网络隧道，使用 KCP极大的改进了传输速度，并移植了一份 GO版本 KCP
-- [v2ray](https://www.v2ray.com)：著名代理软件，Shadowsocks 代替者，1.17后集成了 kcp协议，使用UDP传输，无数据包特征。
-- [HP-Socket](https://github.com/ldcsaa/HP-Socket)：高性能网络通信框架 HP-Socket。
+- [v2ray](https://www.v2ray.com): 著名代理软件，Shadowsocks 代替者，1.17后集成了 kcp协议，使用UDP传输，无数据包特征。
+- [HP-Socket](https://github.com/ldcsaa/HP-Socket): 高性能网络通信框架 HP-Socket。
+- [frp](https://github.com/fatedier/frp): 高性能内网穿透的反向代理软件，可将将内网服务暴露映射到外网服务器。
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): 使用 KCP的完整 UDP网络库，完整实现了基于 UDP的链接状态管理，会话控制，KCP协议调度等
-- [kcp-java](https://github.com/hkspirt/kcp-java)：Java版本 KCP协议实现。
-- [kcp-netty](https://github.com/szhnet/kcp-netty)：kcp的Java语言实现，基于netty。
+- [kcp-java](https://github.com/hkspirt/kcp-java): Java版本 KCP协议实现。
+- [kcp-netty](https://github.com/szhnet/kcp-netty): kcp的Java语言实现，基于netty。
 - [java-kcp](https://github.com/l42111996/java-Kcp): JAVA版本KCP,基于netty实现(包含fec功能)
 - [kcp-go](https://github.com/xtaci/kcp-go): 高安全性的kcp的 GO语言实现，包含 UDP会话管理的简单实现，可以作为后续开发的基础库。 
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的 csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
@@ -200,13 +213,30 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的
 
 - [Kcp a new low latency secure network stack](https://improbable.io/blog/kcp-a-new-low-latency-secure-network-stack)
 
-# 项目历史
+# 关于作者
 
-See [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
+我叫林伟，笔名韦易笑，写程序很多年，喜欢研究解决程序中的一些瓶颈问题，早年喜欢游戏开发，照着《VGA编程》来做游戏图形，读 Michael Abrash 的《图形程序开发人员指南》做软渲染器，喜欢摆弄一些能够榨干 CPU 能够运行更快的代码，参加工作后，兴趣转移到服务端和网络相关的技术。
+
+2007 年时做了几个传统游戏后开始研究快速动作游戏的同步问题，期间写过不少文章，算是国内比较早研究同步问题的人，然而发现不管怎么解决同步都需要在网络传输方面有所突破，后来离开游戏转行互联网后也发现不少领域有这方面的需求，于是开始花时间在网络传输这个领域上，尝试基于 UDP 实现一些保守的可靠协议，反照 BSD Lite 4.4 的代码实现一些类 TCP 协议，觉得比较有意思，又接着实现一些 P2P 和动态路由网相关的玩具。KCP 协议诞生于 2011 年，基本算是自己传输方面做的几个玩具中的一个。
+
+Kcptun 的作者 xtaci 是我的大学同学，我俩都是学通信的，经常在一起研究如何进行传输优化。
+
+喜欢本项目欢迎关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
+
+# 关于协议
+
+近年来，网络游戏和各类社交网络都在成几何倍数的增长，不管网络游戏还是各类互动社交网络，交互性和复杂度都在迅速提高，都需要在极短的时间内将数据同时投递给大量用户，因此传输技术自然变为未来制约发展的一个重要因素，而开源界里各种著名的传输协议，如 raknet/enet 之类，一发布都是整套协议栈一起发布，这种形式是不利于多样化的，我的项目只能选择用或者不用你，很难选择 “部分用你”，然而你一套协议栈设计的再好，是非常难以满足不同角度的各种需求的。
+
+因此 KCP 的方式是把协议栈 “拆开”，让大家可以根据项目需求进行灵活的调整和组装，你可以下面加一层 reed solomon 的纠删码做 FEC，上面加一层类 RC4/Salsa20 做流加密，握手处再设计一套非对称密钥交换，底层 UDP 传输层再做一套动态路由系统，同时探测多条路径，选最好路径进行传输。这些不同的 “协议单元” 可以像搭建积木一般根据需要自由组合，保证 “简单性” 和 “可拆分性”，这样才能灵活适配多变的业务需求，哪个模块不好，换了就是。
+
+未来传输方面的解决方案必然是根据使用场景深度定制的，因此给大家一个可以自由组合的 “协议单元” ，方便大家集成在自己的协议栈中。
+
+For more information, please see the [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
+
 
 # 欢迎捐赠
 
-![欢迎使用支付宝对该项目进行捐赠](https://raw.githubusercontent.com/skywind3000/kcp/master/images/donation.png)
+![欢迎使用支付宝对该项目进行捐赠](images/donation.png)
 
 欢迎使用支付宝手扫描上面的二维码，对该项目进行捐赠。捐赠款项将用于持续优化 KCP协议以及完善文档。
 
@@ -216,12 +246,10 @@ See [Success Stories](https://github.com/skywind3000/kcp/wiki/Success-Stories).
 欢迎关注
 
 KCP交流群：364933586（QQ群号），KCP集成，调优，网络传输以及相关技术讨论
+
 Gitter 群：https://gitter.im/skywind3000/KCP
 
 blog: http://www.skywind.me
-
-zhihu: https://www.zhihu.com/people/skywind3000
-
 
 
 
