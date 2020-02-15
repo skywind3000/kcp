@@ -11,7 +11,6 @@
 #include <stdlib.h>
 
 #include "test.h"
-#include "ikcp.c"
 
 
 // 模拟网络
