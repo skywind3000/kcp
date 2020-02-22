@@ -887,8 +887,6 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 				#else
 					kcp->cwnd++;
 				#endif
-					}	else {
-					}
 				}
 			}
 			if (kcp->cwnd > kcp->rmt_wnd) {
