@@ -227,7 +227,7 @@ For more information, please see the [Success Stories](https://github.com/skywin
 
 # 关于作者
 
-作者：skywind3000（林伟）
+作者：林伟 (skywind3000)
 
 欢迎关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
 
