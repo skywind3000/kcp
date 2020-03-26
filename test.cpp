@@ -70,8 +70,8 @@ void test(int mode)
 		// 第三个参数 interval为内部处理时钟，默认设置为 10ms
 		// 第四个参数 resend为快速重传指标，设置为2
 		// 第五个参数 为是否禁用常规流控，这里禁止
-		ikcp_nodelay(kcp1, 1, 10, 2, 1);
-		ikcp_nodelay(kcp2, 1, 10, 2, 1);
+		ikcp_nodelay(kcp1, 2, 10, 2, 1);
+		ikcp_nodelay(kcp2, 2, 10, 2, 1);
 		kcp1->rx_minrto = 10;
 		kcp1->fastresend = 1;
 	}
