@@ -71,7 +71,7 @@ static inline char *ikcp_encode16u(char *p, unsigned short w)
 	*(unsigned char*)(p + 0) = (w & 255);
 	*(unsigned char*)(p + 1) = (w >> 8);
 #else
-	*(unsigned short*)(p) = w;
+	memcpy(p, &w, 2);
 #endif
 	p += 2;
 	return p;
@@ -84,7 +84,7 @@ static inline const char *ikcp_decode16u(const char *p, unsigned short *w)
 	*w = *(const unsigned char*)(p + 1);
 	*w = *(const unsigned char*)(p + 0) + (*w << 8);
 #else
-	*w = *(const unsigned short*)p;
+	memcpy(w, p, 2);
 #endif
 	p += 2;
 	return p;
@@ -99,7 +99,7 @@ static inline char *ikcp_encode32u(char *p, IUINT32 l)
 	*(unsigned char*)(p + 2) = (unsigned char)((l >> 16) & 0xff);
 	*(unsigned char*)(p + 3) = (unsigned char)((l >> 24) & 0xff);
 #else
-	*(IUINT32*)p = l;
+	memcpy(p, &l, 4);
 #endif
 	p += 4;
 	return p;
@@ -114,7 +114,7 @@ static inline const char *ikcp_decode32u(const char *p, IUINT32 *l)
 	*l = *(const unsigned char*)(p + 1) + (*l << 8);
 	*l = *(const unsigned char*)(p + 0) + (*l << 8);
 #else 
-	*l = *(const IUINT32*)p;
+	memcpy(l, p, 4);
 #endif
 	p += 4;
 	return p;
