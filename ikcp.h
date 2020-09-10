@@ -316,7 +316,7 @@ struct IKCPCB
 	void (*writelog)(const char *log, struct IKCPCB *kcp, void *user);
 };
 
-
+typedef struct IKCPSEG IKCPSEG;
 typedef struct IKCPCB ikcpcb;
 
 #define IKCP_LOG_OUTPUT			1
@@ -389,6 +389,9 @@ int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
 
 // get how many packet is waiting to be sent
 int ikcp_waitsnd(const ikcpcb *kcp);
+
+// get how many packet is waiting to be receive
+int ikcp_waitrcv(const ikcpcb *kcp);
 
 // fastest: ikcp_nodelay(kcp, 1, 20, 2, 1)
 // nodelay: 0:disable(default), 1:enable

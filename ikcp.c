@@ -141,7 +141,6 @@ static inline long _itimediff(IUINT32 later, IUINT32 earlier)
 //---------------------------------------------------------------------
 // manage segment
 //---------------------------------------------------------------------
-typedef struct IKCPSEG IKCPSEG;
 
 static void* (*ikcp_malloc_hook)(size_t) = NULL;
 static void (*ikcp_free_hook)(void *) = NULL;
@@ -254,7 +253,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 	kcp->mss = kcp->mtu - IKCP_OVERHEAD;
 	kcp->stream = 0;
 
-	kcp->buffer = (char*)ikcp_malloc((kcp->mtu + IKCP_OVERHEAD) * 3);
+	kcp->buffer = (char*)ikcp_malloc(kcp->mtu);
 	if (kcp->buffer == NULL) {
 		ikcp_free(kcp);
 		return NULL;
@@ -1186,6 +1185,7 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 	IINT32 tm_flush = 0x7fffffff;
 	IINT32 tm_packet = 0x7fffffff;
 	IUINT32 minimal = 0;
+	IUINT32 resent;
 	struct IQUEUEHEAD *p;
 
 	if (kcp->updated == 0) {
@@ -1202,18 +1202,27 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 	}
 
 	tm_flush = _itimediff(ts_flush, current);
+    resent = (kcp->fastresend > 0)? (IUINT32)kcp->fastresend : 0xffffffff;
 
 	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = p->next) {
-		const IKCPSEG *seg = iqueue_entry(p, const IKCPSEG, node);
-		IINT32 diff = _itimediff(seg->resendts, current);
+		const IKCPSEG *segment = iqueue_entry(p, const IKCPSEG, node);
+		IINT32 diff = _itimediff(segment->resendts, current);
 		if (diff <= 0) {
 			return current;
+		}
+		else if (segment->fastack >= resent) {
+		    if ((int)segment->xmit <= kcp->fastlimit ||
+				kcp->fastlimit <= 0) {
+		        return current;
+		    }
 		}
 		if (diff < tm_packet) tm_packet = diff;
 	}
 
 	minimal = (IUINT32)(tm_packet < tm_flush ? tm_packet : tm_flush);
-	if (minimal >= kcp->interval) minimal = kcp->interval;
+	IUINT32 interval = (kcp->probe != 0 || kcp->nsnd_que > 0 || kcp->nrcv_que > 0 || kcp->nrcv_buf > 0)
+        ? kcp->interval : 5000;
+	if (minimal >= interval) minimal = interval;
 
 	return current + minimal;
 }
@@ -1225,7 +1234,8 @@ int ikcp_setmtu(ikcpcb *kcp, int mtu)
 	char *buffer;
 	if (mtu < 50 || mtu < (int)IKCP_OVERHEAD) 
 		return -1;
-	buffer = (char*)ikcp_malloc((mtu + IKCP_OVERHEAD) * 3);
+	if(mtu == kcp->mtu) return 0;
+	buffer = (char*)ikcp_malloc(mtu);
 	if (buffer == NULL) 
 		return -2;
 	kcp->mtu = mtu;
@@ -1287,6 +1297,10 @@ int ikcp_waitsnd(const ikcpcb *kcp)
 	return kcp->nsnd_buf + kcp->nsnd_que;
 }
 
+int ikcp_waitrcv(const ikcpcb *kcp)
+{
+	return kcp->nrcv_buf + kcp->nrcv_que;
+}
 
 // read conv
 IUINT32 ikcp_getconv(const void *ptr)
