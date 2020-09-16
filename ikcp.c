@@ -636,12 +636,12 @@ static void ikcp_parse_fastack(ikcpcb *kcp, IUINT32 sn, IUINT32 ts)
 //---------------------------------------------------------------------
 static void ikcp_ack_push(ikcpcb *kcp, IUINT32 sn, IUINT32 ts)
 {
-	size_t newsize = kcp->ackcount + 1;
+	IUINT32 newsize = kcp->ackcount + 1;
 	IUINT32 *ptr;
 
 	if (newsize > kcp->ackblock) {
 		IUINT32 *acklist;
-		size_t newblock;
+		IUINT32 newblock;
 
 		for (newblock = 8; newblock < newsize; newblock <<= 1);
 		acklist = (IUINT32*)ikcp_malloc(newblock * sizeof(IUINT32) * 2);
@@ -652,7 +652,7 @@ static void ikcp_ack_push(ikcpcb *kcp, IUINT32 sn, IUINT32 ts)
 		}
 
 		if (kcp->acklist != NULL) {
-			size_t x;
+			IUINT32 x;
 			for (x = 0; x < kcp->ackcount; x++) {
 				acklist[x * 2 + 0] = kcp->acklist[x * 2 + 0];
 				acklist[x * 2 + 1] = kcp->acklist[x * 2 + 1];
