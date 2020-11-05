@@ -540,6 +540,28 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 //---------------------------------------------------------------------
 // parse ack
 //---------------------------------------------------------------------
+static void ikcp_parse_ack(ikcpcb *kcp, IUINT32 sn)
+{
+	struct IQUEUEHEAD *p, *next;
+
+	if (_itimediff(sn, kcp->snd_una) < 0 || _itimediff(sn, kcp->snd_nxt) >= 0)
+		return;
+
+	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
+		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
+		next = p->next;
+		if (sn == seg->sn) {
+			iqueue_del(p);
+			ikcp_segment_delete(kcp, seg);
+			kcp->nsnd_buf--;
+			break;
+		}
+		if (_itimediff(sn, seg->sn) < 0) {
+			break;
+		}
+	}
+}
+
 static void ikcp_update_ack(ikcpcb *kcp, IINT32 rtt)
 {
 	IINT32 rto = 0;
@@ -565,28 +587,6 @@ static void ikcp_shrink_buf(ikcpcb *kcp)
 		kcp->snd_una = seg->sn;
 	}	else {
 		kcp->snd_una = kcp->snd_nxt;
-	}
-}
-
-static void ikcp_parse_ack(ikcpcb *kcp, IUINT32 sn)
-{
-	struct IQUEUEHEAD *p, *next;
-
-	if (_itimediff(sn, kcp->snd_una) < 0 || _itimediff(sn, kcp->snd_nxt) >= 0)
-		return;
-
-	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
-		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
-		next = p->next;
-		if (sn == seg->sn) {
-			iqueue_del(p);
-			ikcp_segment_delete(kcp, seg);
-			kcp->nsnd_buf--;
-			break;
-		}
-		if (_itimediff(sn, seg->sn) < 0) {
-			break;
-		}
 	}
 }
 
