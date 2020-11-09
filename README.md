@@ -177,6 +177,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [xkcptun](https://github.com/liudf0716/xkcptun): c语言实现的kcptun，主要用于[OpenWrt](https://github.com/openwrt/openwrt), [LEDE](https://github.com/lede-project/source)开发的路由器项目上
 - [et-frame](https://github.com/egametang/ET): C#前后端框架(前端unity3d)，统一用C#开发游戏，实现了前后端kcp协议
 - [yasio](https://github.com/yasio/yasio): 一个跨平台专注于任意客户端程序的异步socket库, 易于使用，相同的API操作KCP/TCP/UDP, 性能测试结果: [benchmark-pump](https://github.com/yasio/yasio/blob/master/benchmark.md).
+- [gouxp](https://github.com/shaoyuan1943/gouxp): 用Go实现基于回调方式的KCP开发包，包含加解密和FEC支持，简单易用。  
 
 # 商业案例
 
