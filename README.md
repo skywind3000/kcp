@@ -210,7 +210,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 
 大型多人游戏服务端引擎 [SpatialOS](https://improbable.io/spatialOS) 在集成 KCP 协议后做了同 TCP/RakNet 的评测：
 
-![](images/spatialos-50.png)
+![](https://github.com/skywind3000/kcp/raw/master/images/spatialos-50.png)
 
 对比了在服务端刷新率为 60 Hz 同时维护 50 个角色时的响应时间，详细对比报告见：
 
