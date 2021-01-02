@@ -4,8 +4,8 @@ KCP - A Fast and Reliable ARQ Protocol
 [![Powered][2]][1] [![Build Status][4]][5] 
 
 [1]: https://github.com/skywind3000/kcp
-[2]: https://skywind3000.gitlab.io/images/p/kcp/kcp.svg
-[3]: https://skywind3000.gitlab.io/images/p/kcp/kcp.svg
+[2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
+[2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
 [4]: https://api.travis-ci.org/skywind3000/kcp.svg?branch=master
 [5]: https://travis-ci.org/skywind3000/kcp
 
@@ -194,7 +194,7 @@ For specifics please refer to: [Reliable Udp Benchmark](https://github.com/libin
 
 MMO Engine [SpatialOS](https://improbable.io/spatialOS) has a benchmark report on KCP/TCP/RakNet:
 
-![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
+![](images/spatialos-50.png)
 
 for more details, please see the report itself:
 
