@@ -88,7 +88,7 @@ class DelayPacket
 {
 public:
 	virtual ~DelayPacket() {
-		if (_ptr) delete _ptr;
+		if (_ptr) delete[] _ptr;
 		_ptr = NULL;
 	}
 
