@@ -154,7 +154,7 @@ typedef struct IQUEUEHEAD iqueue_head;
 #define IOFFSETOF(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
 
 #define ICONTAINEROF(ptr, type, member) ( \
-		(type*)( ((char*)((type*)ptr)) - IOFFSETOF(type, member)) )
+		(type*)( ((char*)(ptr)) - IOFFSETOF(type, member)) )
 
 #define IQUEUE_ENTRY(ptr, type, member) ICONTAINEROF(ptr, type, member)
 
