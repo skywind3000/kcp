@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "ikcp_export.h"
 
 //=====================================================================
 // 32BIT INTEGER DEFINITION 
@@ -343,25 +344,25 @@ extern "C" {
 // create a new kcp control object, 'conv' must equal in two endpoint
 // from the same connection. 'user' will be passed to the output callback
 // output callback can be setup like this: 'kcp->output = my_udp_output'
-ikcpcb* ikcp_create(IUINT32 conv, void *user);
+IKCP_EXPORT ikcpcb* ikcp_create(IUINT32 conv, void *user);
 
 // release kcp control object
-void ikcp_release(ikcpcb *kcp);
+IKCP_EXPORT void ikcp_release(ikcpcb *kcp);
 
 // set output callback, which will be invoked by kcp
-void ikcp_setoutput(ikcpcb *kcp, int (*output)(const char *buf, int len, 
+IKCP_EXPORT void ikcp_setoutput(ikcpcb *kcp, int (*output)(const char *buf, int len,
 	ikcpcb *kcp, void *user));
 
 // user/upper level recv: returns size, returns below zero for EAGAIN
-int ikcp_recv(ikcpcb *kcp, char *buffer, int len);
+IKCP_EXPORT int ikcp_recv(ikcpcb *kcp, char *buffer, int len);
 
 // user/upper level send, returns below zero for error
-int ikcp_send(ikcpcb *kcp, const char *buffer, int len);
+IKCP_EXPORT int ikcp_send(ikcpcb *kcp, const char *buffer, int len);
 
 // update state (call it repeatedly, every 10ms-100ms), or you can ask 
 // ikcp_check when to call it again (without ikcp_input/_send calling).
 // 'current' - current timestamp in millisec. 
-void ikcp_update(ikcpcb *kcp, IUINT32 current);
+IKCP_EXPORT void ikcp_update(ikcpcb *kcp, IUINT32 current);
 
 // Determine when should you invoke ikcp_update:
 // returns when you should invoke ikcp_update in millisec, if there 
@@ -370,41 +371,41 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current);
 // Important to reduce unnacessary ikcp_update invoking. use it to 
 // schedule ikcp_update (eg. implementing an epoll-like mechanism, 
 // or optimize ikcp_update when handling massive kcp connections)
-IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
+IKCP_EXPORT IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
 
 // when you received a low level packet (eg. UDP packet), call it
-int ikcp_input(ikcpcb *kcp, const char *data, long size);
+IKCP_EXPORT int ikcp_input(ikcpcb *kcp, const char *data, long size);
 
 // flush pending data
-void ikcp_flush(ikcpcb *kcp);
+IKCP_EXPORT void ikcp_flush(ikcpcb *kcp);
 
 // check the size of next message in the recv queue
-int ikcp_peeksize(const ikcpcb *kcp);
+IKCP_EXPORT int ikcp_peeksize(const ikcpcb *kcp);
 
 // change MTU size, default is 1400
-int ikcp_setmtu(ikcpcb *kcp, int mtu);
+IKCP_EXPORT int ikcp_setmtu(ikcpcb *kcp, int mtu);
 
 // set maximum window size: sndwnd=32, rcvwnd=32 by default
-int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
+IKCP_EXPORT int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
 
 // get how many packet is waiting to be sent
-int ikcp_waitsnd(const ikcpcb *kcp);
+IKCP_EXPORT int ikcp_waitsnd(const ikcpcb *kcp);
 
 // fastest: ikcp_nodelay(kcp, 1, 20, 2, 1)
 // nodelay: 0:disable(default), 1:enable
 // interval: internal update timer interval in millisec, default is 100ms 
 // resend: 0:disable fast resend(default), 1:enable fast resend
 // nc: 0:normal congestion control(default), 1:disable congestion control
-int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc);
+IKCP_EXPORT int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc);
 
 
-void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
+IKCP_EXPORT void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
 
 // setup allocator
-void ikcp_allocator(void* (*new_malloc)(size_t), void (*new_free)(void*));
+IKCP_EXPORT void ikcp_allocator(void* (*new_malloc)(size_t), void (*new_free)(void*));
 
 // read conv
-IUINT32 ikcp_getconv(const void *ptr);
+IKCP_EXPORT IUINT32 ikcp_getconv(const void *ptr);
 
 
 #ifdef __cplusplus
