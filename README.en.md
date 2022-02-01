@@ -167,6 +167,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): The csharp migration of kcp, containing the session management, which can access the above kcp-go server.
 - [kcp2k](https://github.com/vis2k/kcp2k/): Line-by-line translation to C#, with optional Server/Client on top.
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
+- [kcp-rust-native](https://github.com/b23r0/kcp-rust-native)：KCP bindings for Rust
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): Lua extension of KCP, applicable for Lua server
 - [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
 - [nysocks](https://github.com/oyyd/nysocks): Nysocks provides proxy services base on libuv and kcp for nodejs users. Both SOCKS5 and ss protocols are supported in the client.
