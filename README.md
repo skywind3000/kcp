@@ -169,6 +169,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [kcp-rs](https://github.com/en/kcp-rs): KCP的 rust移植
 - [kcp-rust](https://github.com/Matrix-Zhang/kcp)：新版本 KCP的 rust 移植
 - [tokio-kcp](https://github.com/Matrix-Zhang/tokio_kcp)：rust tokio 的 kcp 集成
+- [kcp-rust-native](https://github.com/b23r0/kcp-rust-native)：rust 的 kcp bindings
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): KCP的 Lua扩展，用于 Lua服务器
 - [node-kcp](https://github.com/leenjewel/node-kcp): node-js 的 KCP 接口  
 - [nysocks](https://github.com/oyyd/nysocks): 基于libuv实现的[node-addon](https://nodejs.org/api/addons.html)，提供nodejs版本的代理服务，客户端接入支持SOCKS5和ss两种协议
