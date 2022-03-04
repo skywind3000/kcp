@@ -182,7 +182,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [yasio](https://github.com/yasio/yasio): 一个跨平台专注于任意客户端程序的异步socket库, 易于使用，相同的API操作KCP/TCP/UDP, 性能测试结果: [benchmark-pump](https://github.com/yasio/yasio/blob/master/benchmark.md).
 - [gouxp](https://github.com/shaoyuan1943/gouxp): 用Go实现基于回调方式的KCP开发包，包含加解密和FEC支持，简单易用。  
 
-- [asio-kcp](https://github.com/sniper00/asio-kcp): 基于asio协程的Modern C++封装，提供asio::tcp类似的API: async_accept,async_read,async_read_some,async_connect,方便二次开发。
+- [asio-kcp](https://github.com/sniper00/asio-kcp): 基于asio的Modern C++封装，提供asio::tcp类似的API: async_accept,async_read,async_read_some,async_connect,方便二次开发。
 
 # 商业案例
 
