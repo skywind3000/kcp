@@ -1,13 +1,13 @@
 KCP - A Fast and Reliable ARQ Protocol
 ======================================
 
-[![Powered][2]][1] [![Build Status][4]][5]
+[![Powered][3]][1] [![Build Status][4]][5]
 [![Backers on Open Collective](https://opencollective.com/kcp/backers/badge.svg)](#backers)
  [![Sponsors on Open Collective](https://opencollective.com/kcp/sponsors/badge.svg)](#sponsors) 
 
 [1]: https://github.com/skywind3000/kcp
-[2]: http://skywind3000.github.io/word/images/kcp.svg
-[3]: https://raw.githubusercontent.com/skywind3000/kcp/master/kcp.svg
+[2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
+[3]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
 [4]: https://api.travis-ci.org/skywind3000/kcp.svg?branch=master
 [5]: https://travis-ci.org/skywind3000/kcp
 
@@ -15,7 +15,7 @@ KCP - A Fast and Reliable ARQ Protocol
 
 # 简介
 
-KCP是一个快速可靠协议，能以比 TCP浪费10%-20%的带宽的代价，换取平均延迟降低 30%-40%，且最大延迟降低三倍的传输效果。纯算法实现，并不负责底层协议（如UDP）的收发，需要使用者自己定义下层数据包的发送方式，以 callback的方式提供给 KCP。 连时钟都需要外部传递进来，内部不会有任何一次系统调用。
+KCP是一个快速可靠协议，能以比 TCP 浪费 10%-20% 的带宽的代价，换取平均延迟降低 30%-40%，且最大延迟降低三倍的传输效果。纯算法实现，并不负责底层协议（如UDP）的收发，需要使用者自己定义下层数据包的发送方式，以 callback的方式提供给 KCP。 连时钟都需要外部传递进来，内部不会有任何一次系统调用。
 
 整个协议只有 ikcp.h, ikcp.c两个源文件，可以方便的集成到用户自己的协议栈中。也许你实现了一个P2P，或者某个基于 UDP的协议，而缺乏一套完善的ARQ可靠协议实现，那么简单的拷贝这两个文件到现有项目中，稍微编写两行代码，即可使用。
 
@@ -161,12 +161,15 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [kcp-netty](https://github.com/szhnet/kcp-netty): kcp的Java语言实现，基于netty。
 - [java-kcp](https://github.com/l42111996/java-Kcp): JAVA版本KCP,基于netty实现(包含fec功能)
 - [csharp-kcp](https://github.com/l42111996/csharp-kcp): csharp版本KCP,基于dotNetty实现(包含fec功能)
+- [kcp-cpp](https://github.com/Unit-X/kcp-cpp): KCP 的多平台（Windows、MacOS、Linux）C++ 实现作为应用程序中的简单库。包含适用于所有平台的套接字处理和辅助函数。
 - [kcp-go](https://github.com/xtaci/kcp-go): 高安全性的kcp的 GO语言实现，包含 UDP会话管理的简单实现，可以作为后续开发的基础库。 
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的 csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
 - [kcp-csharp](https://github.com/KumoKyaku/KCP): 新版本 Kcp的 csharp移植。线程安全，运行时无alloc，对gc无压力。
+- [kcp2k](https://github.com/vis2k/kcp2k/): Line-by-line translation to C#, with optional Server/Client on top.
 - [kcp-rs](https://github.com/en/kcp-rs): KCP的 rust移植
 - [kcp-rust](https://github.com/Matrix-Zhang/kcp)：新版本 KCP的 rust 移植
 - [tokio-kcp](https://github.com/Matrix-Zhang/tokio_kcp)：rust tokio 的 kcp 集成
+- [kcp-rust-native](https://github.com/b23r0/kcp-rust-native)：rust 的 kcp bindings
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): KCP的 Lua扩展，用于 Lua服务器
 - [node-kcp](https://github.com/leenjewel/node-kcp): node-js 的 KCP 接口  
 - [nysocks](https://github.com/oyyd/nysocks): 基于libuv实现的[node-addon](https://nodejs.org/api/addons.html)，提供nodejs版本的代理服务，客户端接入支持SOCKS5和ss两种协议
@@ -210,7 +213,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 
 大型多人游戏服务端引擎 [SpatialOS](https://improbable.io/spatialOS) 在集成 KCP 协议后做了同 TCP/RakNet 的评测：
 
-![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
+![](https://github.com/skywind3000/kcp/raw/master/images/spatialos-50.png)
 
 对比了在服务端刷新率为 60 Hz 同时维护 50 个角色时的响应时间，详细对比报告见：
 

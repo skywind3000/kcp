@@ -4,8 +4,8 @@ KCP - A Fast and Reliable ARQ Protocol
 [![Powered][2]][1] [![Build Status][4]][5] 
 
 [1]: https://github.com/skywind3000/kcp
-[2]: http://skywind3000.github.io/word/images/kcp.svg
-[3]: https://raw.githubusercontent.com/skywind3000/kcp/master/kcp.svg
+[2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
+[2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
 [4]: https://api.travis-ci.org/skywind3000/kcp.svg?branch=master
 [5]: https://travis-ci.org/skywind3000/kcp
 
@@ -158,13 +158,16 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [HP-Socket](https://github.com/ldcsaa/HP-Socket): High Performance TCP/UDP/HTTP Communication Component.
 - [frp](https://github.com/fatedier/frp): A fast reverse proxy to help you expose a local server behind a NAT or firewall to the internet. 
 - [asio-kcp](https://github.com/libinzhangyuan/asio_kcp): Use the complete UDP network library of KCP, complete implementation of UDP-based link state management, session control and KCP protocol scheduling, etc.
+- [kcp-cpp](https://github.com/Unit-X/kcp-cpp): Multi-platform (Windows, MacOS, Linux) C++ implementation of KCP as a simple library in your application. Contains socket handling and helper functions for all platforms.
 - [kcp-java](https://github.com/hkspirt/kcp-java)：Implementation of Java version of KCP protocol.
 - [kcp-netty](https://github.com/szhnet/kcp-netty)：Java implementation of KCP based on Netty.
 - [java-kcp](https://github.com/l42111996/java-Kcp): JAVA version KCP, based on netty implementation (including fec function)
 - [csharp-kcp](https://github.com/l42111996/csharp-kcp): csharp version KCP, based on dotNetty implementation (including fec function)
 - [kcp-go](https://github.com/xtaci/kcp-go): High-security GO language implementation of kcp, including simple implementation of UDP session management, as a base library for subsequent development.
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): The csharp migration of kcp, containing the session management, which can access the above kcp-go server.
+- [kcp2k](https://github.com/vis2k/kcp2k/): Line-by-line translation to C#, with optional Server/Client on top.
 - [kcp-rs](https://github.com/en/kcp-rs): The rust migration of KCP
+- [kcp-rust-native](https://github.com/b23r0/kcp-rust-native)：KCP bindings for Rust
 - [lua-kcp](https://github.com/linxiaolong/lua-kcp): Lua extension of KCP, applicable for Lua server
 - [node-kcp](https://github.com/leenjewel/node-kcp): KCP interface for node-js 
 - [nysocks](https://github.com/oyyd/nysocks): Nysocks provides proxy services base on libuv and kcp for nodejs users. Both SOCKS5 and ss protocols are supported in the client.
@@ -194,7 +197,7 @@ For specifics please refer to: [Reliable Udp Benchmark](https://github.com/libin
 
 MMO Engine [SpatialOS](https://improbable.io/spatialOS) has a benchmark report on KCP/TCP/RakNet:
 
-![](https://raw.githubusercontent.com/skywind3000/kcp/master/images/spatialos-50.png)
+![](images/spatialos-50.png)
 
 for more details, please see the report itself:
 
