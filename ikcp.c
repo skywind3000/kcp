@@ -143,23 +143,17 @@ static inline long _itimediff(IUINT32 later, IUINT32 earlier)
 //---------------------------------------------------------------------
 typedef struct IKCPSEG IKCPSEG;
 
-static void* (*ikcp_malloc_hook)(size_t) = NULL;
-static void (*ikcp_free_hook)(void *) = NULL;
+static void* (*ikcp_malloc_hook)(size_t) = malloc;
+static void (*ikcp_free_hook)(void *) = free;
 
 // internal malloc
 static void* ikcp_malloc(size_t size) {
-	if (ikcp_malloc_hook) 
-		return ikcp_malloc_hook(size);
-	return malloc(size);
+	return ikcp_malloc_hook(size);
 }
 
 // internal free
 static void ikcp_free(void *ptr) {
-	if (ikcp_free_hook) {
-		ikcp_free_hook(ptr);
-	}	else {
-		free(ptr);
-	}
+	ikcp_free_hook(ptr);
 }
 
 // redefine allocator
