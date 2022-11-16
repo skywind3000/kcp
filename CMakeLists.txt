@@ -6,10 +6,13 @@ include(CTest)
 include(GNUInstallDirs)
 
 add_library(kcp STATIC ikcp.c)
+add_library(kcp_shared SHARED ikcp.c)
+
+set_property(TARGET kcp_shared PROPERTY LIBRARY_OUTPUT_NAME kcp)
 
 install(FILES ikcp.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(TARGETS kcp
+install(TARGETS kcp_shared
     EXPORT kcp-targets
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
