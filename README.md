@@ -162,6 +162,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [java-kcp](https://github.com/l42111996/java-Kcp): JAVA版本KCP,基于netty实现(包含fec功能)
 - [csharp-kcp](https://github.com/l42111996/csharp-kcp): csharp版本KCP,基于dotNetty实现(包含fec功能)
 - [kcp-cpp](https://github.com/Unit-X/kcp-cpp): KCP 的多平台（Windows、MacOS、Linux）C++ 实现作为应用程序中的简单库。包含适用于所有平台的套接字处理和辅助函数。
+- [kcp-perl](https://github.com/Homqyy/kcp-perl): kcp的Perl实现，其是面向对象的，Perl-Like的。
 - [kcp-go](https://github.com/xtaci/kcp-go): 高安全性的kcp的 GO语言实现，包含 UDP会话管理的简单实现，可以作为后续开发的基础库。 
 - [kcp-csharp](https://github.com/limpo1989/kcp-csharp): kcp的 csharp移植，同时包含一份回话管理，可以连接上面kcp-go的服务端。
 - [kcp-csharp](https://github.com/KumoKyaku/KCP): 新版本 Kcp的 csharp移植。线程安全，运行时无alloc，对gc无压力。
