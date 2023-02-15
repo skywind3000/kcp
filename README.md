@@ -185,7 +185,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 
 # 商业案例
 
-- [原神](https://ys.mihoyo.com/)：米哈游的《原神》使用 KCP 降低游戏数据的传输耗时，提升手感和用户体验。
+- [原神](https://ys.mihoyo.com/)：米哈游的《原神》使用 KCP 降低游戏消息的传输耗时，提升操作的体验。
 - [SpatialOS](https://improbable.io/spatialOS): 大型多人分布式游戏服务端引擎，BigWorld 的后继者，使用 KCP 加速数据传输。
 - [西山居](https://www.xishanju.com/)：使用 KCP 进行游戏数据加速。
 - [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速视频推流，有效提高流畅性
