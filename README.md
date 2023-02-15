@@ -185,12 +185,17 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 
 # 商业案例
 
-- [明日帝国](https://www.taptap.com/app/50664)：Game K17 的 《明日帝国》 （Google Play），使用 KCP 加速游戏消息，让全球玩家流畅联网
-- [仙灵大作战](https://www.taptap.com/app/27242)：4399 的 MOBA游戏，使用 KCP 优化游戏同步
+- [原神](https://ys.mihoyo.com/)：米哈游的《原神》使用 KCP 降低游戏数据的传输耗时，提升手感和用户体验。
+- [SpatialOS](https://improbable.io/spatialOS): 大型多人分布式游戏服务端引擎，BigWorld 的后继者，使用 KCP 加速数据传输。
+- [西山居](https://www.xishanju.com/)：使用 KCP 进行游戏数据加速。
 - [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速视频推流，有效提高流畅性
 - [BOBO](http://bobo.163.com/)：网易 BOBO 使用 kcp 加速主播推流
-- [云帆加速](http://www.yfcloud.com/)：使用 KCP 加速文件传输和视频推流，优化了台湾主播推流的流畅度
-- [SpatialOS](https://improbable.io/spatialOS): 大型多人分布式游戏服务端引擎，BigWorld 的后继者，使用 KCP 加速数据传输。
+- [uu](https://uu.163.com)：网易 UU 加速器使用 KCP/KCPTUN 经行远程传输加速。
+- [阿里云](https://cn.aliyun.com/)：阿里云的视频传输加速服务 GRTN 使用 KCP 进行音视频数据传输优化。
+- [云帆加速](http://www.yfcloud.com/)：使用 KCP 加速文件传输和视频推流，优化了台湾主播推流的流畅度。
+- [明日帝国](https://www.taptap.com/app/50664)：Game K17 的 《明日帝国》 （Google Play），使用 KCP 加速游戏消息，让全球玩家流畅联网
+- [仙灵大作战](https://www.taptap.com/app/27242)：4399 的 MOBA游戏，使用 KCP 优化游戏同步
+
 
 欢迎告知更多案例
 
