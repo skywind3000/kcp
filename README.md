@@ -191,7 +191,7 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [CC](http://cc.163.com/)：网易 CC 使用 kcp 加速视频推流，有效提高流畅性
 - [BOBO](http://bobo.163.com/)：网易 BOBO 使用 kcp 加速主播推流
 - [UU](https://uu.163.com)：网易 UU 加速器使用 KCP/KCPTUN 经行远程传输加速。
-- [阿里云](https://cn.aliyun.com/)：阿里云的视频传输加速服务 GRTN 使用 KCP 进行音视频数据传输优化。
+- [阿里云](https://cn.aliyun.com/)：阿里云的视频传输加速服务 GRTN 使用 KCP 进行音视频数据传输优化，动态加速产品也使用 KCP。
 - [云帆加速](http://www.yfcloud.com/)：使用 KCP 加速文件传输和视频推流，优化了台湾主播推流的流畅度。
 - [明日帝国](https://www.taptap.com/app/50664)：Game K17 的 《明日帝国》 （Google Play），使用 KCP 加速游戏消息，让全球玩家流畅联网
 - [仙灵大作战](https://www.taptap.com/app/27242)：4399 的 MOBA游戏，使用 KCP 优化游戏同步
