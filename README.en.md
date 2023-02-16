@@ -177,6 +177,7 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [xkcptun](https://github.com/liudf0716/xkcptun): C language implementation of kcptun, embedded-friendly for [LEDE](https://github.com/lede-project/source) and [OpenWrt](https://github.com/openwrt/openwrt) projects.
 - [yasio](https://github.com/yasio/yasio): A cross-platform asynchronous socket library focus on any client application with kcp support, easy to use, API same with UDP and TCP, see [benchmark-pump](https://github.com/yasio/yasio/blob/master/benchmark.md).
 - [gouxp](https://github.com/shaoyuan1943/gouxp): Implementing a callback-based KCP development package with Go, with decryption and FEC support, is easy to use.
+- [asio-kcp](https://github.com/sniper00/asio-kcp): Use kcp with asio and modern C++, support async_accept, async_connect, async_read, async_read_some and can use with asio coroutine.
 
 # Protocol Comparison
 
