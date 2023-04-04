@@ -507,7 +507,7 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 	if (len <= (int)kcp->mss) count = 1;
 	else count = (len + kcp->mss - 1) / kcp->mss;
 
-	if (count >= (int)IKCP_WND_RCV) return -2;
+	if (count >= (int)kcp->rcv_wnd) return -2;
 
 	if (count == 0) count = 1;
 
