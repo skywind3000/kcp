@@ -470,6 +470,7 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 {
 	IKCPSEG *seg;
 	int count, i;
+	int append = 0;
 
 	assert(kcp->mss > 0);
 	if (len < 0) return -1;
@@ -497,6 +498,7 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 				len -= extend;
 				iqueue_del_init(&old->node);
 				ikcp_segment_delete(kcp, old);
+				append = extend;
 			}
 		}
 		if (len <= 0) {
@@ -507,7 +509,11 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 	if (len <= (int)kcp->mss) count = 1;
 	else count = (len + kcp->mss - 1) / kcp->mss;
 
-	if (count >= (int)IKCP_WND_RCV) return -2;
+	if (count >= (int)IKCP_WND_RCV) {
+		if (kcp->stream != 0 && append > 0) 
+			return append;
+		return -2;
+	}
 
 	if (count == 0) count = 1;
 
