@@ -63,3 +63,5 @@ connection can be find out from your map or array.
 
 # vim: set ts=4 sw=4 tw=0 noet cc=78 wrap textwidth=78 :
 
+
+- rtt: Roud-Trip Time

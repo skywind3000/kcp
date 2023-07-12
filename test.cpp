@@ -13,6 +13,8 @@
 #include "test.h"
 #include "ikcp.c"
 
+#define BUFF_LEN 2000
+#define TEST_CNT 1000
 
 // 模拟网络
 LatencySimulator *vnet;
@@ -77,8 +79,8 @@ void test(int mode)
 	}
 
 
-	char buffer[2000];
-	int hr;
+	char buffer[BUFF_LEN];
+	int len;
 
 	IUINT32 ts1 = iclock();
 
@@ -94,39 +96,39 @@ void test(int mode)
 			((IUINT32*)buffer)[1] = current;
 
 			// 发送上层协议包
-			ikcp_send(kcp1, buffer, 8);
+			ikcp_send(kcp1, buffer, rand()%BUFF_LEN);
 		}
 
 		// 处理虚拟网络：检测是否有udp包从p1->p2
 		while (1) {
-			hr = vnet->recv(1, buffer, 2000);
-			if (hr < 0) break;
+			len = vnet->recv(1, buffer, BUFF_LEN);
+			if (len < 0) break;
 			// 如果 p2收到udp，则作为下层协议输入到kcp2
-			ikcp_input(kcp2, buffer, hr);
+			ikcp_input(kcp2, buffer, len);
 		}
 
 		// 处理虚拟网络：检测是否有udp包从p2->p1
 		while (1) {
-			hr = vnet->recv(0, buffer, 2000);
-			if (hr < 0) break;
+			len = vnet->recv(0, buffer, BUFF_LEN);
+			if (len < 0) break;
 			// 如果 p1收到udp，则作为下层协议输入到kcp1
-			ikcp_input(kcp1, buffer, hr);
+			ikcp_input(kcp1, buffer, len);
 		}
 
 		// kcp2接收到任何包都返回回去
 		while (1) {
-			hr = ikcp_recv(kcp2, buffer, 10);
+			len = ikcp_recv(kcp2, buffer, BUFF_LEN);
 			// 没有收到包就退出
-			if (hr < 0) break;
+			if (len < 0) break;
 			// 如果收到包就回射
-			ikcp_send(kcp2, buffer, hr);
+			ikcp_send(kcp2, buffer, len);
 		}
 
 		// kcp1收到kcp2的回射数据
 		while (1) {
-			hr = ikcp_recv(kcp1, buffer, 10);
+			len = ikcp_recv(kcp1, buffer, BUFF_LEN);
 			// 没有收到包就退出
-			if (hr < 0) break;
+			if (len < 0) break;
 			IUINT32 sn = *(IUINT32*)(buffer + 0);
 			IUINT32 ts = *(IUINT32*)(buffer + 4);
 			IUINT32 rtt = current - ts;
@@ -142,9 +144,9 @@ void test(int mode)
 			count++;
 			if (rtt > (IUINT32)maxrtt) maxrtt = rtt;
 
-			printf("[RECV] mode=%d sn=%d rtt=%d\n", mode, (int)sn, (int)rtt);
+			printf("[RECV] mode=%d sn=%d rtt=%d len=%d\n", mode, (int)sn, (int)rtt, len);
 		}
-		if (next > 1000) break;
+		if (next > TEST_CNT) break;
 	}
 
 	ts1 = iclock() - ts1;
