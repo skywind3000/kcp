@@ -17,7 +17,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-
+#define IKCP_FASTACK_CONSERVE
 
 //=====================================================================
 // KCP BASIC
