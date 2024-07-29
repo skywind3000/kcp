@@ -35,8 +35,8 @@ const IUINT32 IKCP_ASK_TELL = 2;		// need to send IKCP_CMD_WINS
 const IUINT32 IKCP_WND_SND = 32;
 const IUINT32 IKCP_WND_RCV = 128;       // must >= max fragment size
 const IUINT32 IKCP_MTU_DEF = 1400;
-const IUINT32 IKCP_ACK_FAST	= 3;
-const IUINT32 IKCP_INTERVAL	= 100;
+const IUINT32 IKCP_ACK_FAST = 3;
+const IUINT32 IKCP_INTERVAL = 100;
 const IUINT32 IKCP_OVERHEAD = 24;
 const IUINT32 IKCP_DEADLINK = 20;
 const IUINT32 IKCP_THRESH_INIT = 2;
@@ -296,7 +296,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 
 
 //---------------------------------------------------------------------
-// release a new kcpcb
+// release a kcpcb
 //---------------------------------------------------------------------
 void ikcp_release(ikcpcb *kcp)
 {
@@ -547,6 +547,28 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 //---------------------------------------------------------------------
 // parse ack
 //---------------------------------------------------------------------
+static void ikcp_parse_ack(ikcpcb *kcp, IUINT32 sn)
+{
+	struct IQUEUEHEAD *p, *next;
+
+	if (_itimediff(sn, kcp->snd_una) < 0 || _itimediff(sn, kcp->snd_nxt) >= 0)
+		return;
+
+	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
+		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
+		next = p->next;
+		if (sn == seg->sn) {
+			iqueue_del(p);
+			ikcp_segment_delete(kcp, seg);
+			kcp->nsnd_buf--;
+			break;
+		}
+		if (_itimediff(sn, seg->sn) < 0) {
+			break;
+		}
+	}
+}
+
 static void ikcp_update_ack(ikcpcb *kcp, IINT32 rtt)
 {
 	IINT32 rto = 0;
@@ -572,28 +594,6 @@ static void ikcp_shrink_buf(ikcpcb *kcp)
 		kcp->snd_una = seg->sn;
 	}	else {
 		kcp->snd_una = kcp->snd_nxt;
-	}
-}
-
-static void ikcp_parse_ack(ikcpcb *kcp, IUINT32 sn)
-{
-	struct IQUEUEHEAD *p, *next;
-
-	if (_itimediff(sn, kcp->snd_una) < 0 || _itimediff(sn, kcp->snd_nxt) >= 0)
-		return;
-
-	for (p = kcp->snd_buf.next; p != &kcp->snd_buf; p = next) {
-		IKCPSEG *seg = iqueue_entry(p, IKCPSEG, node);
-		next = p->next;
-		if (sn == seg->sn) {
-			iqueue_del(p);
-			ikcp_segment_delete(kcp, seg);
-			kcp->nsnd_buf--;
-			break;
-		}
-		if (_itimediff(sn, seg->sn) < 0) {
-			break;
-		}
 	}
 }
 
@@ -725,7 +725,7 @@ void ikcp_parse_data(ikcpcb *kcp, IKCPSEG *newseg)
 #endif
 
 	// move available data from rcv_buf -> rcv_queue
-	while (! iqueue_is_empty(&kcp->rcv_buf)) {
+	while (!iqueue_is_empty(&kcp->rcv_buf)) {
 		IKCPSEG *seg = iqueue_entry(kcp->rcv_buf.next, IKCPSEG, node);
 		if (seg->sn == kcp->rcv_nxt && kcp->nrcv_que < kcp->rcv_wnd) {
 			iqueue_del(&seg->node);
@@ -1182,7 +1182,7 @@ void ikcp_update(ikcpcb *kcp, IUINT32 current)
 // Determine when should you invoke ikcp_update:
 // returns when you should invoke ikcp_update in millisec, if there 
 // is no ikcp_input/_send calling. you can call ikcp_update in that
-// time, instead of call update repeatly.
+// time, instead of call update repeatedly.
 // Important to reduce unnacessary ikcp_update invoking. use it to 
 // schedule ikcp_update (eg. implementing an epoll-like mechanism, 
 // or optimize ikcp_update when handling massive kcp connections)
@@ -1224,8 +1224,6 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 
 	return current + minimal;
 }
-
-
 
 int ikcp_setmtu(ikcpcb *kcp, int mtu)
 {
@@ -1274,7 +1272,6 @@ int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
 	}
 	return 0;
 }
-
 
 int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd)
 {
