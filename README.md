@@ -203,6 +203,8 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [明日帝国](https://www.taptap.com/app/50664)：Game K17 的 《明日帝国》 （Google Play），使用 KCP 加速游戏消息，让全球玩家流畅联网
 - [仙灵大作战](https://www.taptap.com/app/27242)：4399 的 MOBA游戏，使用 KCP 优化游戏同步
 
+相关阅读：[《原神》也在使用 KCP 加速游戏消息](https://skywind.me/blog/archives/2706)
+
 KCP 成功的运行在多个用户规模上亿的项目上，为他们提供了更加灵敏和丝滑网络体验。
 
 欢迎告知更多案例
