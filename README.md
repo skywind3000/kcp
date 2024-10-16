@@ -249,7 +249,7 @@ For more information, please see the [Success Stories](https://github.com/skywin
 
 作者：林伟 (skywind3000)
 
-欢迎关注我的：[twitter](https://twitter.com/skywind3000) 和 [zhihu](https://www.zhihu.com/people/skywind3000)。
+欢迎关注我的：[个人博客](https://skywind.me/blog) 和 [推特](https://x.com/skywind3000)。
 
 我在多年的开发经历中，一直都喜欢研究解决程序中的一些瓶颈问题，早年喜欢游戏开发，照着《VGA编程》来做游戏图形，读 Michael Abrash 的《图形程序开发人员指南》做软渲染器，爱好摆弄一些能够榨干 CPU 能够运行更快的代码，参加工作后，兴趣转移到服务端和网络相关的技术。
 
