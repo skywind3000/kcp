@@ -2,14 +2,17 @@ KCP - A Fast and Reliable ARQ Protocol
 ======================================
 
 [![Powered][3]][1] 
+[![GitHub license]([6])]([7])
 [![Backers on Open Collective](https://opencollective.com/kcp/backers/badge.svg)](#backers)
- [![Sponsors on Open Collective](https://opencollective.com/kcp/sponsors/badge.svg)](#sponsors) 
+[![Sponsors on Open Collective](https://opencollective.com/kcp/sponsors/badge.svg)](#sponsors) 
 
 [1]: https://github.com/skywind3000/kcp
 [2]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
 [3]: https://github.com/skywind3000/kcp/raw/master/kcp.svg
 [4]: https://api.travis-ci.org/skywind3000/kcp.svg?branch=master
 [5]: https://travis-ci.org/skywind3000/kcp
+[6]: https://img.shields.io/badge/license-MIT-blue.svg
+[7]: https://github.com/skywind3000/kcp/blob/master/LICENSE
 
 [README in English](https://github.com/skywind3000/kcp/blob/master/README.en.md) 
 
