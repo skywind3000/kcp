@@ -2,7 +2,7 @@ KCP - A Fast and Reliable ARQ Protocol
 ======================================
 
 [![Powered][3]][1] 
-[![GitHub license]([6])]([7])
+[![GitHub license][6]][7]
 [![Backers on Open Collective](https://opencollective.com/kcp/backers/badge.svg)](#backers)
 [![Sponsors on Open Collective](https://opencollective.com/kcp/sponsors/badge.svg)](#sponsors) 
 
