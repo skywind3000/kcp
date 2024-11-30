@@ -189,7 +189,8 @@ vcpkg中的kcp库由Microsoft团队成员和社区贡献者保持最新状态。
 - [gouxp](https://github.com/shaoyuan1943/gouxp): 用Go实现基于回调方式的KCP开发包，包含加解密和FEC支持，简单易用。  
 - [skcp](https://github.com/xboss/skcp): 基于libev实现的库，具备传输加密及基本的连接管理能力。
 - [pykcp](https://github.com/enkiller/pykcp): Python 版本的 KCP 实现
-- [php-ext-kcp](https://github.com/wpjscc/php-ext-kcp): php 的 KCP 扩展 
+- [php-ext-kcp](https://github.com/wpjscc/php-ext-kcp): php 的 KCP 扩展
+- [asio-kcp(new)](https://github.com/sniper00/asio-kcp): c++的asio/kcp支持，支持asio协程等现代c++异步模型
 
 # 商业案例
 

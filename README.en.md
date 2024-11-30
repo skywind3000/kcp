@@ -185,7 +185,8 @@ Both the use and configuration of the protocol is very simple, in most cases, af
 - [gouxp](https://github.com/shaoyuan1943/gouxp): Implementing a callback-based KCP development package with Go, with decryption and FEC support, is easy to use.
 - [kcp.py](https://github.com/RealistikDash/kcp.py): Python bindings and networking with an emphasis on dev friendliness.
 - [pykcp](https://github.com/enkiller/pykcp): KCP implementation for Python version.
-- [php-ext-kcp](https://github.com/wpjscc/php-ext-kcp): php extension for KCP
+- [php-ext-kcp](https://github.com/wpjscc/php-ext-kcp): php extension for KCP.
+- [asio-kcp(new)](https://github.com/sniper00/asio-kcp): KCP implementation for C++/Asio, with Modern C++/Asio async features, such as coroutine.
 
 # Protocol Comparison
 
