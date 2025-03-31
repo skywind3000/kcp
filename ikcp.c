@@ -133,6 +133,18 @@ static inline IUINT32 _ibound_(IUINT32 lower, IUINT32 middle, IUINT32 upper)
 	return _imin_(_imax_(lower, middle), upper);
 }
 
+static inline IUINT32 _iceilpow2_(IUINT32 x)
+{
+	--x;
+	x |= x >> 1;
+	x |= x >> 2;
+	x |= x >> 4;
+	x |= x >> 8;
+	x |= x >> 16;
+	++x;
+	return x;
+}
+
 static inline long _itimediff(IUINT32 later, IUINT32 earlier) 
 {
 	return ((IINT32)(later - earlier));
@@ -650,7 +662,7 @@ static void ikcp_ack_push(ikcpcb *kcp, IUINT32 sn, IUINT32 ts)
 		IUINT32 *acklist;
 		IUINT32 newblock;
 
-		for (newblock = 8; newblock < newsize; newblock <<= 1);
+		newblock = newsize <= 8 ? 8 : _iceilpow2_(newsize);
 		acklist = (IUINT32*)ikcp_malloc(newblock * sizeof(IUINT32) * 2);
 
 		if (acklist == NULL) {
