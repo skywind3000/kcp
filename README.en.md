@@ -16,39 +16,54 @@ KCP - A Fast and Reliable ARQ Protocol
 
 # Introduction
 
-KCP is a fast and reliable protocol that can achieve the transmission effect of a reduction of the average latency by 30% to 40% and reduction of the maximum delay by a factor of three, at the cost of 10% to 20% more bandwidth wasted than TCP. It is implemented by using the pure algorithm, and is not responsible for the sending and receiving of the underlying protocol (such as UDP), requiring the users to define their own transmission mode for the underlying data packet, and provide it to KCP in the way of callback. Even the clock needs to be passed in from the outside, without any internal system calls.
+**KCP** is a high-performance, reliable transport protocol designed to significantly reduce latency compared to traditional TCP. It can achieve a **30–40% reduction in average latency** and up to three times lower maximum delay, _costing 10–20% additional bandwidth overhead_.
 
-The entire protocol has only two source files of ikcp.h, ikcp.c, which can be easily integrated into the user's own protocol stack. You may have implement a P2P, or a UDP-based protocol, but are lack of a set of perfect ARQ reliable protocol implementation, then by simply copying the two files to the existing project, and writing a couple of lines of code, you can use it.
+KCP is implemented purely as an algorithm; it does not handle sending or receiving packets. It is designed to be transport-agnostic. Users must define their underlying transmission logic (e.g., via UDP) and pass data to KCP through callbacks. Even timekeeping is left to the user; KCP requires the current clock value to be provided externally, making it completely free of internal system calls.
 
+The protocol consists of two source files: **ikcp.h and ikcp.c**. These files are lightweight and easy to integrate into your existing network stack. Whether you're building a P2P system or a UDP-based protocol that needs a robust ARQ (Automatic Repeat reQuest) mechanism, you can start using KCP by adding these files to your project and writing a few lines of integration code.
 
 
 # Technical Specifications
 
-TCP is designed for traffic (the amount of kilobits per second of data that can be transmitted), which focuses on the full use of bandwidth. While KCP is designed for the flow rate (the amount of time it takes to send a single packet from one end to the other), with 10% -20% bandwidth waste in exchange for transmission speed 30%-40% faster than TCP. TCP channel is a grand canal with very slow flow rate, but very large flow per second, while KCP is a small torrent with the rapid flow. KCP has both normal and fast modes, achieving the result of flow rate increase by the following strategies:
+While TCP is optimized for throughput—maximizing the amount of data transmitted per second (e.g., kilobits/sec)—KCP is designed to focus on latency and packet delivery time. By prioritizing how quickly individual packets travel from sender to receiver, KCP trades 10–20% more bandwidth overhead for 30–40% faster transmission speed compared to TCP.
+
+Think of TCP as a wide canal: it can carry a large volume of data, but the flow is relatively slow. In contrast, KCP is like a narrow, fast-moving stream—it sends smaller amounts of data more quickly, ensuring lower delay and faster responsiveness.
+
+KCP supports both normal mode and fast mode, each optimizing performance based on different needs. Its increased flow rate is achieved through several key strategies:
 
 #### RTO Doubled vs Not Doubled:
 
-TCP timeout calculation is RTOx2, so three consecutive packet losses will make it RTOx8, which is very terrible, while after KCP fast mode is enabled, it is not x2, but x1.5 (Experimental results show that the value of 1.5 is relatively good), which has improved the transmission speed.
+In TCP, retransmission timeout (RTO) increases exponentially—each failure doubles the timeout interval (RTO × 2). This means three consecutive losses can escalate to RTO × 8, leading to serious transmission delays.
+KCP, in contrast, uses a more responsive approach in fast mode: the RTO increases by a factor of 1.5x (based on empirical results), significantly improving recovery speed and reducing delay after packet loss.
 
 #### Selective Retransmission vs Full Retransmission:
 
-When packet loss occurs in TCP, all the data after the lost packet will be retransmitted, while KCP is selective retransmission, and only re-transmits the data packets that are really lost.
+TCP often retransmits all subsequent data after a lost packet, which can lead to excessive redundancy.
+KCP implements selective retransmission, ensuring that only the actually lost packets are resent, minimizing unnecessary data transmission and improving efficiency.
 
 #### Fast Retransmission:
 
-The transmitting terminal sends 1, 2, 3, 4 and 5 packets, and then receives the remote ACK: 1, 3, 4 and 5, when receiving ACK3, KCP knows that 2 is skipped 1 time, and when receiving ACK4, it knows that 2 is skipped 2 times, at this point, it can consider that 2 is lost, without waiting until timeout, it will directly retransmit packet 2, which can greatly improve the transmission speed when packet loss occurs.
+When the sender transmits packets 1 through 5 and receives ACKs for 1, 3, 4, and 5, KCP deduces from missing ACK2 that packet 2 has likely been lost. After receiving multiple out-of-order ACKs, KCP can immediately trigger a fast retransmit of packet 2—without waiting for a timeout—drastically reducing retransmission latency under packet loss.
 
 #### Delayed ACK vs Non-delayed ACK:
 
-In order to make full use of the bandwidth, TCP delays sending an ACK (Even NODELAY does not work), so that the timeout calculation will come out with a relatively high RTT, which has extended the judgment process when packet loss occurs. While for KCP, it is adjustable whether to delay sending an ACK.
+TCP often delays ACKs to optimize throughput, which can unintentionally inflate RTT calculations and delay loss detection—even with `NODELAY` settings.
+KCP provides configurable ACK behavior, allowing ACKs to be sent immediately when needed, enhancing responsiveness in latency-sensitive applications.
 
 #### UNA vs ACK+UNA：
 
-There are two kinds of ARQ model responses: UNA (All packets before this number received, such as TCP) and ACK (The packet with this number received). Using UNA alone will result in full retransmissions, and using ACK alone has too much cost for packet loss, hence in the previous protocols, one of the two has been selected; while in KCP protocol, all packets have UNA information except for a single ACK packet.
+ARQ protocols typically use either:
+
+    UNA (Unacknowledged Acknowledgment): Confirms all packets before a given sequence number (e.g., TCP).
+
+    ACK: Confirms receipt of a specific packet.
+
+Each has tradeoffs: UNA can lead to full retransmissions, and standalone ACKs create overhead during loss.
+KCP combines both—each control message contains UNA info, and a dedicated ACK frame is used when necessary. This hybrid model increases reliability and precision without excess cost.
 
 #### Non-concessional Flow Control:
-
-KCP normal mode uses the same fair concession rules as TCP, i.e., the send window size is determined by: four factors including the size of the send cache, the size of the receive buffer at the receiving end, packet loss concession and slow start. However, when sending small data with high timeliness requirement, it is allowed to select skipping the latter two steps through configuration, and use only the first two items to control the transmission frequency, sacrificing some of the fairness and bandwidth utilization, in exchange for the effect of smooth transmission even when BT is opened.
+By default, KCP follows TCP's fair flow control—factoring in send buffer size, receiver buffer, congestion control, and slow-start.
+However, for latency-critical small data, KCP can be configured to bypass congestion and slow-start, relying only on buffer sizes. This allows smooth transmission even under heavy network load (e.g., when BitTorrent is active), sacrificing some fairness for timeliness.
 
 
 # Quick Install
@@ -61,7 +76,7 @@ You can download and install kcp using the [vcpkg](https://github.com/Microsoft/
     ./vcpkg integrate install
     ./vcpkg install kcp
 
-The kcp port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+Microsoft team members and community contributors keep the kcp port in vcpkg up to date. If the version is outdated, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
 
 # Basic Usage
 
@@ -107,7 +122,7 @@ The kcp port in vcpkg is kept up to date by Microsoft team members and community
    ikcp_input(kcp, received_udp_packet, received_udp_size);
    ```
 
-   After processing the output / input of the lower layer protocols, KCP protocol can work normally, and ikcp_send is used to send data to the remote end. While the other end uses ikcp_recv (kcp, ptr, size) to receive the data.
+   After processing the output/input of the lower layer protocols, the KCP protocol can work normally. ikcp_send is used to send data to the remote end, while the other end uses ikcp_recv (kcp, ptr, size) to receive the data.
 
 
 # Protocol Configuration
@@ -119,10 +134,10 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
    int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc)
    ```
 
-   - `nodelay` : Whether nodelay mode is enabled, 0 is not enabled; 1 enabled.
-   - `interval` ：Protocol internal work interval, in milliseconds, such as 10 ms or 20 ms.
-   - `resend` ：Fast retransmission mode, 0 represents off by default, 2 can be set (2 ACK spans will result in direct retransmission)
-   - `nc` ：Whether to turn off flow control, 0 represents “Do not turn off” by default, 1 represents “Turn off”.
+   - `nodelay`: Whether nodelay mode is enabled, 0 is not enabled; 1 enabled.
+   - `interval` ：P rotocol internal work interval, in milliseconds, such as 10 ms or 20 ms.
+   - `resend`  ：Fast retransmission mode, 0 represents off by default, 2 can be set (2 ACK spans will result in direct retransmission)
+   - `nc` ： Whether to turn off flow control, 0 represents “Do not turn off” by default, 1 represents “Turn off”.
    - Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
    - Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
@@ -130,11 +145,11 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
    ```cpp
    int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
    ```
-   The call will set the maximum send window and maximum receive window size of the procotol, which is 32 by default. This can be understood as SND_BUF and RCV_BUF of TCP, but the unit is not the same, SND / RCV_BUF unit is byte, while this unit is the packet.
+   By default, the call will set the maximum send window and maximum receive window size of the procotol, 32. This can be understood as SND_BUF and RCV_BUF of TCP, but the unit is not the same, SND / RCV_BUF unit is byte, while this unit is the packet.
 
 3. Maximum Transmission Unit:
 
-   Pure algorithm protocol is not responsible for MTU detection, the default mtu is 1400 bytes, which can be set using ikcp_setmtu. The value will affect the maximum transmission unit upon data packet merging and fragmentation.
+   The algorithm protocol is not responsible for MTU detection. The default MTU is 1400 bytes, which can be set using ikcp_setmtu. The value will affect the maximum transmission unit upon data packet merging and fragmentation.
 
 4. Minimum RTO:
 
@@ -147,7 +162,7 @@ The protocol default mode is a standard ARQ, and various acceleration switches c
 
 # Document Indexing
 
-Both the use and configuration of the protocol is very simple, in most cases, after you read the above contents, basically you will be able to use it. If you need further fine control, such as changing the KCP memory allocator, or if you need more efficient large-scale scheduling of KCP links (such as more than 3,500 links), or to better combine with TCP, you can continue the extensive reading:
+Both the use and configuration of the protocol is straightforward, in most cases, after you read the above contents, you can use it. If you need further fine control, such as changing the KCP memory allocator, or if you need more efficient large-scale scheduling of KCP links (such as more than 3,500 links), or to better combine with TCP, you can continue the extensive reading:
 
 - [KCP Best Practice](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice-EN)
 - [Integration with the Existing TCP Server](https://github.com/skywind3000/kcp/wiki/KCP-Best-Practice-EN)
