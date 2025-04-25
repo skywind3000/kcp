@@ -194,11 +194,19 @@ public:
 		IUINT32 delay = rttmin;
 		if (rttmax > rttmin) delay += rand() % (rttmax - rttmin);
 		pkt->setts(current + delay);
-		if (peer == 0) {
-			p12.push_back(pkt);
-		}	else {
-			p21.push_back(pkt);
-		}
+        DelayTunnel *tunnel;
+        if (peer == 0) {
+            tunnel = &p12;
+        }else{
+            tunnel = &p21;
+        }
+        auto iter = tunnel->crbegin();
+        for(;iter != tunnel->crend(); ++iter){
+            if((*iter)->ts() <= pkt->ts()){
+                break;
+            }
+        }
+        tunnel->insert(iter.base(), pkt);
 	}
 
 	// 接收数据
