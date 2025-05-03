@@ -35,12 +35,12 @@ const IUINT32 IKCP_ASK_TELL = 2;		// need to send IKCP_CMD_WINS
 const IUINT32 IKCP_WND_SND = 32;
 const IUINT32 IKCP_WND_RCV = 128;       // must >= max fragment size
 const IUINT32 IKCP_MTU_DEF = 1400;
-const IUINT32 IKCP_ACK_FAST	= 3;
-const IUINT32 IKCP_INTERVAL	= 100;
+const IUINT32 IKCP_ACK_FAST = 3;
+const IUINT32 IKCP_INTERVAL = 100;
 const IUINT32 IKCP_OVERHEAD = 24;
 const IUINT32 IKCP_DEADLINK = 20;
-const IUINT32 IKCP_THRESH_INIT = 2;
-const IUINT32 IKCP_THRESH_MIN = 2;
+const IUINT32 IKCP_SSTHRESH_INIT = 2;		// slow start threshold
+const IUINT32 IKCP_SSTHRESH_MIN = 2;
 const IUINT32 IKCP_PROBE_INIT = 7000;		// 7 secs to probe window size
 const IUINT32 IKCP_PROBE_LIMIT = 120000;	// up to 120 secs to probe window
 const IUINT32 IKCP_FASTACK_LIMIT = 5;		// max times to trigger fastack
@@ -282,7 +282,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 	kcp->nodelay = 0;
 	kcp->updated = 0;
 	kcp->logmask = 0;
-	kcp->ssthresh = IKCP_THRESH_INIT;
+	kcp->ssthresh = IKCP_SSTHRESH_INIT;
 	kcp->fastresend = 0;
 	kcp->fastlimit = IKCP_FASTACK_LIMIT;
 	kcp->nocwnd = 0;
@@ -300,7 +300,6 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 //---------------------------------------------------------------------
 void ikcp_release(ikcpcb *kcp)
 {
-	assert(kcp);
 	if (kcp) {
 		IKCPSEG *seg;
 		while (!iqueue_is_empty(&kcp->snd_buf)) {
@@ -1124,16 +1123,16 @@ void ikcp_flush(ikcpcb *kcp)
 	if (change) {
 		IUINT32 inflight = kcp->snd_nxt - kcp->snd_una;
 		kcp->ssthresh = inflight / 2;
-		if (kcp->ssthresh < IKCP_THRESH_MIN)
-			kcp->ssthresh = IKCP_THRESH_MIN;
+		if (kcp->ssthresh < IKCP_SSTHRESH_MIN)
+			kcp->ssthresh = IKCP_SSTHRESH_MIN;
 		kcp->cwnd = kcp->ssthresh + resent;
 		kcp->incr = kcp->cwnd * kcp->mss;
 	}
 
 	if (lost) {
 		kcp->ssthresh = cwnd / 2;
-		if (kcp->ssthresh < IKCP_THRESH_MIN)
-			kcp->ssthresh = IKCP_THRESH_MIN;
+		if (kcp->ssthresh < IKCP_SSTHRESH_MIN)
+			kcp->ssthresh = IKCP_SSTHRESH_MIN;
 		kcp->cwnd = 1;
 		kcp->incr = kcp->mss;
 	}
