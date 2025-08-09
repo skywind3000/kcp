@@ -1193,12 +1193,12 @@ IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current)
 		return current;
 	}
 
-	if (_itimediff(current, ts_flush) >= 10000 ||
-		_itimediff(current, ts_flush) < -10000) {
+	long cmp = _itimediff(current, ts_flush);
+	if ( cmp >= 10000 || cmp < -10000) {
 		ts_flush = current;
 	}
 
-	if (_itimediff(current, ts_flush) >= 0) {
+	if (cmp >= 0) {
 		return current;
 	}
 
