@@ -17,7 +17,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-
+#define IKCP_FASTACK_CONSERVE
 
 //=====================================================================
 // KCP BASIC
@@ -470,6 +470,7 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 {
 	IKCPSEG *seg;
 	int count, i;
+	int sent = 0;
 
 	assert(kcp->mss > 0);
 	if (len < 0) return -1;
@@ -497,17 +498,22 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 				len -= extend;
 				iqueue_del_init(&old->node);
 				ikcp_segment_delete(kcp, old);
+				sent = extend;
 			}
 		}
 		if (len <= 0) {
-			return 0;
+			return sent;
 		}
 	}
 
 	if (len <= (int)kcp->mss) count = 1;
 	else count = (len + kcp->mss - 1) / kcp->mss;
 
-	if (count >= (int)IKCP_WND_RCV) return -2;
+	if (count >= (int)IKCP_WND_RCV) {
+		if (kcp->stream != 0 && sent > 0) 
+			return sent;
+		return -2;
+	}
 
 	if (count == 0) count = 1;
 
@@ -531,9 +537,10 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 			buffer += size;
 		}
 		len -= size;
+		sent += size;
 	}
 
-	return 0;
+	return sent;
 }
 
 

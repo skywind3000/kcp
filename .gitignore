@@ -1,0 +1,14 @@
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.ncb
+
+/.vscode/*
+/.idea/*
+/.DS_Store
+/.env
+/build/*
+
