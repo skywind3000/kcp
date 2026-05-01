@@ -456,10 +456,10 @@ int ikcp_peeksize(const ikcpcb *kcp)
 	for (p = kcp->rcv_queue.next; p != &kcp->rcv_queue; p = p->next) {
 		seg = iqueue_entry(p, IKCPSEG, node);
 		length += seg->len;
-		if (seg->frg == 0) break;
+		if (seg->frg == 0) return length;
 	}
 
-	return length;
+	return -1;
 }
 
 
@@ -529,7 +529,7 @@ int ikcp_send(ikcpcb *kcp, const char *buffer, int len)
 			memcpy(seg->data, buffer, size);
 		}
 		seg->len = size;
-		seg->frg = (kcp->stream == 0)? (count - i - 1) : 0;
+		seg->frg = (kcp->stream == 0)? _imin_(count - i - 1, 255) : 0;
 		iqueue_init(&seg->node);
 		iqueue_add_tail(&seg->node, &kcp->snd_queue);
 		kcp->nsnd_que++;
