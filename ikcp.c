@@ -1046,6 +1046,7 @@ void ikcp_flush(ikcpcb *kcp)
 		newseg->rto = kcp->rx_rto;
 		newseg->fastack = 0;
 		newseg->xmit = 0;
+		newseg->fast_xmit = 0;
 	}
 
 	// calculate resent
@@ -1077,10 +1078,11 @@ void ikcp_flush(ikcpcb *kcp)
 			lost = 1;
 		}
 		else if (segment->fastack >= resent) {
-			if ((int)segment->xmit <= kcp->fastlimit || 
+			if ((int)segment->fast_xmit < kcp->fastlimit || 
 				kcp->fastlimit <= 0) {
 				needsend = 1;
 				segment->xmit++;
+				segment->fast_xmit++;
 				segment->fastack = 0;
 				segment->resendts = current + segment->rto;
 				change++;

@@ -279,6 +279,7 @@ struct IKCPSEG
 	IUINT32 rto;
 	IUINT32 fastack;
 	IUINT32 xmit;
+	IUINT32 fast_xmit;
 	char data[1];
 };
 
