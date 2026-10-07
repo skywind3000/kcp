@@ -14,6 +14,83 @@
 #include "ikcp.c"
 
 
+// Capture complete UDP datagrams; each data message fills one MSS.
+typedef std::vector<std::vector<char> > TestPackets;
+
+static int capture_packet(const char *buf, int len, ikcpcb *, void *user)
+{
+	TestPackets *packets = (TestPackets *)user;
+	packets->push_back(std::vector<char>(buf, buf + len));
+	return 0;
+}
+
+static void deliver_packets(TestPackets &packets, ikcpcb *peer,
+	int drop, bool reverse)
+{
+	for (int i = 0; i < (int)packets.size(); i++) {
+		int index = reverse ? (int)packets.size() - i - 1 : i;
+		if (index == drop) continue;
+		const std::vector<char> &packet = packets[index];
+		int result = ikcp_input(peer, &packet[0], (long)packet.size());
+		assert(result == 0);
+	}
+	packets.clear();
+}
+
+// Equal-timestamp ACKs must advance maxack to the highest sequence number.
+// Two receiver-generated ACK batches should recover a single lost datagram
+// with resend=2, before the original 200 ms retransmission timeout.
+static bool test_ack_timestamps(bool reverse, IUINT32 start)
+{
+	TestPackets data, acks;
+	ikcpcb *sender = ikcp_create(1, &data);
+	ikcpcb *receiver = ikcp_create(1, &acks);
+	assert(sender != NULL && receiver != NULL);
+	ikcp_setoutput(sender, capture_packet);
+	ikcp_setoutput(receiver, capture_packet);
+	ikcp_nodelay(sender, 1, 10, 2, 1);
+	ikcp_nodelay(receiver, 1, 10, 2, 1);
+	std::vector<char> message(sender->mss);
+
+	for (int batch = 0; batch < 2; batch++) {
+		int first = batch == 0 ? 0 : 4;
+		int last = batch == 0 ? 4 : 7;
+		for (int i = first; i < last; i++) {
+			memset(&message[0], i, message.size());
+			int result = ikcp_send(sender, &message[0], (int)message.size());
+			assert(result == (int)message.size());
+		}
+		ikcp_update(sender, start + batch * 20);
+		assert(data.size() == (size_t)(last - first));
+		for (size_t i = 0; i < data.size(); i++)
+			assert(data[i].size() == sender->mtu);
+		// Drop the entire datagram containing sequence number 1 only once.
+		deliver_packets(data, receiver, batch == 0 ? 1 : -1, reverse);
+		ikcp_update(receiver, start + batch * 20);
+		assert(acks.size() == 1 && acks[0].size() == 3 * IKCP_OVERHEAD);
+		deliver_packets(acks, sender, -1, false);
+	}
+
+	ikcp_update(sender, start + 30);
+	deliver_packets(data, receiver, -1, false);
+	int received = 0;
+	bool contents_ok = true;
+	for (;;) {
+		int result = ikcp_recv(receiver, &message[0], (int)message.size());
+		if (result < 0) break;
+		if (result != (int)message.size()) contents_ok = false;
+		for (int i = 0; i < result; i++)
+			if (message[i] != (char)received) contents_ok = false;
+		received++;
+	}
+	printf("ACK timestamps: reverse=%d start=%u delivered=%d/7 at 30ms\n",
+		(int)reverse, (unsigned)start, received);
+	bool passed = received == 7 && contents_ok && sender->xmit == 0;
+	ikcp_release(sender);
+	ikcp_release(receiver);
+	return passed;
+}
+
 // 模拟网络
 LatencySimulator *vnet;
 
@@ -159,8 +236,15 @@ void test(int mode)
 	char ch; scanf("%c", &ch);
 }
 
-int main()
+int main(int argc, char **argv)
 {
+	bool passed = true;
+	passed &= test_ack_timestamps(false, 1000);
+	passed &= test_ack_timestamps(true, 1000);
+	passed &= test_ack_timestamps(false, 0xfffffff0u);
+	passed &= test_ack_timestamps(true, 0xfffffff0u);
+	if (!passed) return 1;
+	if (argc == 2 && strcmp(argv[1], "--ack-timestamp-test") == 0) return 0;
 	test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
 	test(1);	// 普通模式，关闭流控等
 	test(2);	// 快速模式，所有开关都打开，且关闭流控

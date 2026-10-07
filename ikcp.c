@@ -840,7 +840,7 @@ int ikcp_input(ikcpcb *kcp, const char *data, long size)
 					maxack = sn;
 					latest_ts = ts;
 				#else
-					if (_itimediff(ts, latest_ts) > 0) {
+					if (_itimediff(ts, latest_ts) >= 0) {
 						maxack = sn;
 						latest_ts = ts;
 					}
