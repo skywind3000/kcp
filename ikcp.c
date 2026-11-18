@@ -962,7 +962,7 @@ static char *ikcp_encode_seg(char *ptr, const IKCPSEG *seg)
 static int ikcp_wnd_unused(const ikcpcb *kcp)
 {
 	if (kcp->nrcv_que < kcp->rcv_wnd) {
-		return kcp->rcv_wnd - kcp->nrcv_que;
+		return _imin_(kcp->rcv_wnd - kcp->nrcv_que, 0xffff);
 	}
 	return 0;
 }

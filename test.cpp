@@ -159,8 +159,62 @@ void test(int mode)
 	char ch; scanf("%c", &ch);
 }
 
+static int send_to_peer(const char *buf, int len, ikcpcb *, void *peer)
+{
+	return ikcp_input((ikcpcb*)peer, buf, len);
+}
+
+static void expect_window(ikcpcb *receiver, ikcpcb *sender, IUINT32 expected)
+{
+	ikcp_flush(receiver);
+	if (sender->rmt_wnd != expected) {
+		fprintf(stderr, "expected receive window %lu, peer saw %lu\n",
+			(unsigned long)expected, (unsigned long)sender->rmt_wnd);
+		exit(1);
+	}
+}
+
+static void test_receive_window()
+{
+	ikcpcb *sender = ikcp_create(1, NULL);
+	ikcpcb *receiver = ikcp_create(1, sender);
+	sender->user = receiver;
+	ikcp_setoutput(sender, send_to_peer);
+	ikcp_setoutput(receiver, send_to_peer);
+	ikcp_wndsize(sender, 128, 0);
+	ikcp_nodelay(sender, 1, 10, 0, 1);
+	ikcp_update(sender, 0);
+	ikcp_update(receiver, 0);
+
+	// Read the segment before its ACK is flushed to advertise an empty queue.
+	char byte;
+	for (int window = 65535; window <= 65536; ++window) {
+		ikcp_wndsize(receiver, 0, window);
+		if (receiver->rcv_wnd != (IUINT32)window) {
+			fprintf(stderr, "could not configure a receive window of %d segments\n", window);
+			exit(1);
+		}
+		ikcp_send(sender, "x", 1);
+		ikcp_flush(sender);
+		if (ikcp_recv(receiver, &byte, 1) != 1) exit(1);
+		expect_window(receiver, sender, 65535);
+	}
+
+	// Reading one segment from a full queue reopens the window.
+	ikcp_wndsize(receiver, 0, 128);
+	for (int i = 0; i < 128; ++i) ikcp_send(sender, "x", 1);
+	ikcp_flush(sender);
+	expect_window(receiver, sender, 0);
+	if (ikcp_recv(receiver, &byte, 1) != 1) exit(1);
+	expect_window(receiver, sender, 1);
+
+	ikcp_release(receiver);
+	ikcp_release(sender);
+}
+
 int main()
 {
+	test_receive_window();
 	test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
 	test(1);	// 普通模式，关闭流控等
 	test(2);	// 快速模式，所有开关都打开，且关闭流控
